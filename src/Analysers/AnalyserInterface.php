@@ -5,7 +5,8 @@ namespace Mediadevs\PHPStrictlyTyped\Analysers;
 use Mediadevs\PHPStrictlyTyped\Report;
 
 /**
- * Interface AnalyserInterface
+ * Interface AnalyserInterface.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Analysers
  */
 interface AnalyserInterface

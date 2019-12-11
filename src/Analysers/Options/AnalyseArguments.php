@@ -2,12 +2,13 @@
 
 namespace Mediadevs\PHPStrictlyTyped\Analysers\Options;
 
-use \Mediadevs\PHPStrictlyTyped\Report;
+use Mediadevs\PHPStrictlyTyped\Report;
 use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseArguments
+ * Class AnalyseArguments.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
 class AnalyseArguments extends AbstractAnalyser implements AnalyserInterface

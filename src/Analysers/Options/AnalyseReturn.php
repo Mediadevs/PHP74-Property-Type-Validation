@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseReturn
+ * Class AnalyseReturn.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
 class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface

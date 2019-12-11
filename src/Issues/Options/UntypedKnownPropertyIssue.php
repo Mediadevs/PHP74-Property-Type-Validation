@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class IncorrectPropertyTypeIssue
+ * Class IncorrectPropertyTypeIssue.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
 class UntypedKnownPropertyIssue extends AbstractIssue implements IssueInterface

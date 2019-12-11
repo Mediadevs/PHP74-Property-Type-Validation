@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseMagicMethods
+ * Class AnalyseMagicMethods.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
 class AnalyseMagicMethods extends AbstractAnalyser implements AnalyserInterface
