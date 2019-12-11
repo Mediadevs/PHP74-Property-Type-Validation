@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedArgumentIssue
+ * Class UntypedArgumentIssue.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
 class UntypedArgumentIssue extends AbstractIssue implements IssueInterface

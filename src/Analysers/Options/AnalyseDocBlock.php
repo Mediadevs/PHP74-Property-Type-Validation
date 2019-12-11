@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseDocBlock
+ * Class AnalyseDocBlock.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
 class AnalyseDocBlock extends AbstractAnalyser implements AnalyserInterface
