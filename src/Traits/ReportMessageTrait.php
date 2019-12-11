@@ -3,7 +3,8 @@
 namespace Mediadevs\StrictPHP\Traits;
 
 /**
- * Trait ReportMessageTrait
+ * Trait ReportMessageTrait.
+ *
  * @package Mediadevs\StrictPHP\Traits
  */
 trait ReportMessageTrait
@@ -30,7 +31,7 @@ trait ReportMessageTrait
             $this->getFile(),
             $this->getLine(),
             $this->getColumn(),
-            $this->getType()
+            $this->getType(),
         ]);
     }
 }

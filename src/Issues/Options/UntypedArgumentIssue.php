@@ -7,7 +7,8 @@ use Mediadevs\StrictPHP\Issues\IssueInterface;
 use Mediadevs\StrictPHP\Traits\ReportMessageTrait;
 
 /**
- * Class UntypedArgumentIssue
+ * Class UntypedArgumentIssue.
+ *
  * @package Mediadevs\StrictPHP\Issues\Options
  */
 class UntypedArgumentIssue extends AbstractIssue implements IssueInterface
@@ -27,15 +28,15 @@ class UntypedArgumentIssue extends AbstractIssue implements IssueInterface
      * Creating a new issue based on the collected values.
      *
      * @param string $file
-     * @param int $line
-     * @param int $column
+     * @param int    $line
+     * @param int    $column
      * @param string $assumedType
      *
      * @return static
      */
     public static function create(string $file, int $line, int $column, string $assumedType): parent
     {
-        $issue = new self;
+        $issue = new self();
 
         $issue->file = $file;
         $issue->line = $line;

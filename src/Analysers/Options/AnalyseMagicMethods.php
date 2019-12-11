@@ -7,7 +7,8 @@ use Mediadevs\StrictPHP\Analysers\AbstractAnalyser;
 use Mediadevs\StrictPHP\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseMagicMethods
+ * Class AnalyseMagicMethods.
+ *
  * @package Mediadevs\StrictPHP\Analysers\Options
  */
 class AnalyseMagicMethods extends AbstractAnalyser implements AnalyserInterface
