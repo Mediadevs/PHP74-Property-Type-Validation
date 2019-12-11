@@ -1,8 +1,8 @@
 <?php
 
-namespace Mediadevs\PropertyAnalyser\Issues;
+namespace Mediadevs\StrictPHP\Issues;
 
-abstract class AbstractIssue implements IssueInterface
+abstract class AbstractIssue
 {
     /**
      * The name of the file where the issue has been detected.
@@ -30,7 +30,7 @@ abstract class AbstractIssue implements IssueInterface
      *
      * @var string
      */
-    protected string $assumedType;
+    protected string $type;
 
     /**
      * AbstractIssue constructor.
@@ -74,8 +74,8 @@ abstract class AbstractIssue implements IssueInterface
      *
      * @return null|string
      */
-    public function getAssumedType(): ?string
+    public function getType(): ?string
     {
-        return $this->assumedType;
+        return $this->type;
     }
 }

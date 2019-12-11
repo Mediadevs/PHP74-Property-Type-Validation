@@ -1,1 +1,1 @@
-"# PHP74-Property-Type-Validation" 
+# PHP74-Property-Type-Validation

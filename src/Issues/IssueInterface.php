@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\PropertyAnalyser\Issues;
+namespace Mediadevs\StrictPHP\Issues;
 
 interface IssueInterface
 {

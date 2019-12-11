@@ -1,10 +1,14 @@
 <?php
 
-namespace Mediadevs\PropertyAnalyser;
+namespace Mediadevs\StrictPHP;
 
-use Mediadevs\PropertyAnalyser\Issues\IssueInterface;
+use Mediadevs\StrictPHP\Issues\IssueInterface;
 
-class IssueCollection implements \Countable, \Iterator
+/**
+ * Class Report
+ * @package Mediadevs\StrictPHP
+ */
+class Report implements \Countable, \Iterator
 {
     /**
      * Storage for all the issues, each issue must implement the IssueInterface.
