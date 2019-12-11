@@ -3,7 +3,8 @@
 namespace Mediadevs\PHPStrictlyTyped\Issues;
 
 /**
- * Interface IssueInterface
+ * Interface IssueInterface.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Issues
  */
 interface IssueInterface

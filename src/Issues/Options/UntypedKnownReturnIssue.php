@@ -7,7 +7,8 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedKnownReturnIssue
+ * Class UntypedKnownReturnIssue.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
 class UntypedKnownReturnIssue extends AbstractIssue implements IssueInterface
@@ -40,4 +41,3 @@ class UntypedKnownReturnIssue extends AbstractIssue implements IssueInterface
         return $issue;
     }
 }
-
