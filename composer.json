@@ -1,5 +1,5 @@
 {
-    "name": "Mediadevs/PHPStrictlyTyped",
+    "name": "mediadevs/php-strictly-typed",
     "description": "Enforcing strictly typed PHP OOP",
     "type": "library",
     "license": "MIT",
