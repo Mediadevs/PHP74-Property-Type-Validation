@@ -1,12 +1,12 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Analysers;
+namespace Mediadevs\PHPStrictlyTyped\Analysers;
 
-use Mediadevs\StrictPHP\Report;
+use Mediadevs\PHPStrictlyTyped\Report;
 
 /**
  * Interface AnalyserInterface
- * @package Mediadevs\StrictPHP\Analysers
+ * @package Mediadevs\PHPStrictlyTyped\Analysers
  */
 interface AnalyserInterface
 {

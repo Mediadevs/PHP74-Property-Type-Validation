@@ -1,7 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Issues;
+namespace Mediadevs\PHPStrictlyTyped\Issues;
 
+/**
+ * Class AbstractIssue
+ * @package Mediadevs\PHPStrictlyTyped\Issues
+ */
 abstract class AbstractIssue
 {
     /**
@@ -38,6 +42,18 @@ abstract class AbstractIssue
     protected function __construct()
     {
     }
+
+    /**
+     * Registering errors and using a custom set of parameters for each issue.
+     *
+     * @param string      $file
+     * @param int         $line
+     * @param int         $column
+     * @param string|null $type
+     *
+     * @return AbstractIssue
+     */
+    public static abstract function register(string $file, int $line, int $column, ?string $type): self;
 
     /**
      * Returning the name of the file where the issue has been detected.

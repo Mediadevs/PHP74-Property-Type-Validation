@@ -1,46 +1,41 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Issues\Options;
+namespace Mediadevs\PHPStrictlyTyped\Issues\Options;
 
-use Mediadevs\StrictPHP\Issues\AbstractIssue;
-use Mediadevs\StrictPHP\Issues\IssueInterface;
-use Mediadevs\StrictPHP\Traits\ReportMessageTrait;
+use Mediadevs\PHPStrictlyTyped\Traits\ReportTrait;
+use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
+use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
  * Class UntypedArgumentIssue
- * @package Mediadevs\StrictPHP\Issues\Options
+ * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
 class UntypedArgumentIssue extends AbstractIssue implements IssueInterface
 {
-    use ReportMessageTrait;
+    use ReportTrait;
 
-    private const TYPE = 'untyped-argument';
-
-    /*
-     * - %s1 file
-     * - %s2 line
-     * - %s3 column
-     */
-    private const MESSAGE = 'Missing argument type declaration! Location: %s at %s:%s';
+    private const KNOWN = false; // Whether type it should have is known.
+    private const ERROR_CODE = 'untyped-argument';
+    private const ERROR_MESSAGE = 'Invalid or missing argument type!';
 
     /**
-     * Creating a new issue based on the collected values.
+     * Registering errors and using a custom set of parameters for each issue.
      *
-     * @param string $file
-     * @param int $line
-     * @param int $column
-     * @param string $assumedType
+     * @param string      $file
+     * @param int         $line
+     * @param int         $column
+     * @param string|null $type
      *
-     * @return static
+     * @return AbstractIssue
      */
-    public static function create(string $file, int $line, int $column, string $assumedType): parent
+    public static function register(string $file, int $line, int $column, ?string $type): parent
     {
-        $issue = new self;
+        $issue = new self();
 
         $issue->file = $file;
         $issue->line = $line;
         $issue->column = $column;
-        $issue->assumedType = $assumedType;
+        $issue->type = $type;
 
         return $issue;
     }

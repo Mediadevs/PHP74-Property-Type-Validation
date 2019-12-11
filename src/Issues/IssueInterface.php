@@ -1,7 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Issues;
+namespace Mediadevs\PHPStrictlyTyped\Issues;
 
+/**
+ * Interface IssueInterface
+ * @package Mediadevs\PHPStrictlyTyped\Issues
+ */
 interface IssueInterface
 {
     /**
@@ -26,9 +30,9 @@ interface IssueInterface
     public function getColumn(): ?int;
 
     /**
-     * Returning the type which the validation assumed it should have.
+     * Returning the type which the subject should have.
      *
      * @return null|string
      */
-    public function getAssumedType(): ?string;
+    public function getType(): ?string;
 }

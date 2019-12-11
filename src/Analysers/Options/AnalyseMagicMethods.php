@@ -1,14 +1,14 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Analysers\Options;
+namespace Mediadevs\PHPStrictlyTyped\Analysers\Options;
 
-use Mediadevs\StrictPHP\Report;
-use Mediadevs\StrictPHP\Analysers\AbstractAnalyser;
-use Mediadevs\StrictPHP\Analysers\AnalyserInterface;
+use Mediadevs\PHPStrictlyTyped\Report;
+use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
+use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
  * Class AnalyseMagicMethods
- * @package Mediadevs\StrictPHP\Analysers\Options
+ * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
 class AnalyseMagicMethods extends AbstractAnalyser implements AnalyserInterface
 {

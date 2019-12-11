@@ -1,12 +1,12 @@
 <?php
 
-namespace Mediadevs\StrictPHP\Analysers;
+namespace Mediadevs\PHPStrictlyTyped\Analysers;
 
-use Mediadevs\StrictPHP\Report;
+use Mediadevs\PHPStrictlyTyped\Report;
 
 /**
  * Class AbstractAnalyser
- * @package Mediadevs\StrictPHP\Analysers
+ * @package Mediadevs\PHPStrictlyTyped\Analysers
  */
 abstract class AbstractAnalyser
 {
