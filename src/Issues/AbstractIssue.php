@@ -32,9 +32,9 @@ abstract class AbstractIssue
     /**
      * The type which the validation assumed it should have.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type;
 
     /**
      * AbstractIssue constructor.
@@ -58,9 +58,9 @@ abstract class AbstractIssue
     /**
      * Returning the name of the file where the issue has been detected.
      *
-     * @return null|string
+     * @return string
      */
-    public function getFile(): ?string
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -68,9 +68,9 @@ abstract class AbstractIssue
     /**
      * Returning the line where the issue has been detected.
      *
-     * @return int|null
+     * @return int
      */
-    public function getLine(): ?int
+    public function getLine():?int
     {
         return $this->line;
     }
@@ -78,9 +78,9 @@ abstract class AbstractIssue
     /**
      * Returning the column where the issue has been detected.
      *
-     * @return int|null
+     * @return int
      */
-    public function getColumn(): ?int
+    public function getColumn(): int
     {
         return $this->column;
     }
@@ -88,7 +88,7 @@ abstract class AbstractIssue
     /**
      * Returning the type which the validation assumed it should have.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getType(): ?string
     {
