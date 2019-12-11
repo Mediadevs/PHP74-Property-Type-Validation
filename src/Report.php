@@ -28,7 +28,7 @@ class Report implements \Countable, \Iterator
     }
 
     /**
-     * @inheritDoc
+     * @return mixed
      */
     public function current()
     {
@@ -36,7 +36,7 @@ class Report implements \Countable, \Iterator
     }
 
     /**
-     * @inheritDoc
+     * @return mixed|void
      */
     public function next()
     {
@@ -44,7 +44,7 @@ class Report implements \Countable, \Iterator
     }
 
     /**
-     * @inheritDoc
+     * @return int|mixed|string|null
      */
     public function key()
     {
@@ -52,15 +52,15 @@ class Report implements \Countable, \Iterator
     }
 
     /**
-     * @inheritDoc
+     * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return false !== $this->current();
     }
 
     /**
-     * @inheritDoc
+     * @return mixed|void
      */
     public function rewind()
     {
@@ -68,9 +68,9 @@ class Report implements \Countable, \Iterator
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->issues);
     }
