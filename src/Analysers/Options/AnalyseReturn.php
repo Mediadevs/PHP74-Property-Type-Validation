@@ -7,7 +7,8 @@ use Mediadevs\StrictPHP\Analysers\AbstractAnalyser;
 use Mediadevs\StrictPHP\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseReturn
+ * Class AnalyseReturn.
+ *
  * @package Mediadevs\StrictPHP\Analysers\Options
  */
 class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface

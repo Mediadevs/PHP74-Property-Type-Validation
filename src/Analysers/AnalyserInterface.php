@@ -5,7 +5,8 @@ namespace Mediadevs\StrictPHP\Analysers;
 use Mediadevs\StrictPHP\Report;
 
 /**
- * Interface AnalyserInterface
+ * Interface AnalyserInterface.
+ *
  * @package Mediadevs\StrictPHP\Analysers
  */
 interface AnalyserInterface
