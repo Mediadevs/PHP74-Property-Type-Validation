@@ -11,7 +11,7 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
  *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
-class AnalyseDocBlock extends AbstractAnalyser implements AnalyserInterface
+class AnalyseDocBlocks extends AbstractAnalyser implements AnalyserInterface
 {
     /**
      * Analysing the DocBlocks from the current instance.

@@ -23,7 +23,13 @@
     },
     "require": {
         "php": "^7.4",
-        "nikic/php-parser": "^4.3"
+        "symfony/yaml": "^4.3",
+        "symfony/finder": "^4.3",
+        "symfony/console": "^4.3",
+        "symfony/process": "^4.3",
+        "nikic/php-parser": "^4.2",
+        "symfony/stopwatch": "^4.3",
+        "phpdocumentor/reflection-docblock": "^4.3"
     },
     "bin": ["bin/strict-php-oop"]
 }

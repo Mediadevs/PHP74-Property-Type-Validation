@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Symfony\Component\Console\Application;
+use Mediadevs\PHPStrictlyTyped\Command\AnalyseCommand;
+
+// Including the composer autoloader
+if (file_exists(__DIR__.'/../../../autoload.php')) {
+    require __DIR__.'/../../../autoload.php';
+} else {
+    require_once __DIR__.'/../vendor/autoload.php';
+}
+
+// Creating the analyser
+$analyseCommand = new AnalyseCommand();
+
+// Executing the parser
+$parser = new Application('PHP Strictly Typed');
+$parser->add($analyseCommand);
+$parser->setDefaultCommand();
+$parser->run();
