@@ -2,8 +2,11 @@
 
 namespace Mediadevs\PHPStrictlyTyped;
 
+use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseMagicMethods;
+use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalysePropertyType;
 use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseArgumentsFromMethod;
 use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseArgumentsFromDocBlock;
+use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseReturnTypeFromDocBlock;
 
 /**
  * Class Analyser.
@@ -28,6 +31,10 @@ class Analyser
     {
         // Registering all the analysers the the array.
         $this->analysers[] = new AnalyseArgumentsFromDocBlock($code);
+        $this->analysers[] = new AnalyseArgumentsFromMethod($code);
+        $this->analysers[] = new AnalyseMagicMethods($code);
+        $this->analysers[] = new AnalysePropertyType($code);
+        $this->analysers[] = new AnalyseReturnTypeFromDocBlock($code);
         $this->analysers[] = new AnalyseArgumentsFromMethod($code);
     }
 
