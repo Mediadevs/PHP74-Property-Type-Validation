@@ -25,8 +25,6 @@ class DocBlockHelper
         'inheritdoc',
     );
 
-
-
     /**
      * The docblock which will be interacted with.
      *
@@ -88,8 +86,6 @@ class DocBlockHelper
         $returns = $docBlock->getTagsByName(self::TAG_RETURN);
 
         // Parsing through all the collected tags and applying validation for each tag.
-
-        // Parsing through all the collected tags and applying validation for each tag.
         foreach ($returns as $tag) {
             return ($this->typeValidator($tag->getType()));
         }
@@ -122,7 +118,7 @@ class DocBlockHelper
     /**
      * Applying the TypeHelper the determine whether this type is valid.
      *
-     * @param null|Type $type
+     * @param Type|null $type
      *
      * @return bool
      *
