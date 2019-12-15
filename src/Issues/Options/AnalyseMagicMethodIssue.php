@@ -7,17 +7,16 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedKnownReturnIssue.
+ * Class AnalyseMagicMethodIssue.
  *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
-class UntypedKnownReturnIssue extends AbstractIssue implements IssueInterface
+class AnalyseMagicMethodIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const KNOWN = true; // Whether type it should have is known.
-    private const ERROR_CODE = 'untyped-known-return';
-    private const ERROR_MESSAGE = 'Invalid return type!';
+    private const ERROR_CODE = 'magic-method';
+    private const ERROR_MESSAGE = 'Invalid or missing magic method return type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

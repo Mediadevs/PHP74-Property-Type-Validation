@@ -7,17 +7,16 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedReturnIssue.
+ * Class AnalyseReturnTypeFromDocBlockIssue.
  *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
-class UntypedReturnIssue extends AbstractIssue implements IssueInterface
+class AnalyseReturnTypeFromDocBlockIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const KNOWN = false; // Whether type it should have is known.
-    private const ERROR_CODE = 'untyped-return';
-    private const ERROR_MESSAGE = 'Invalid or missing return type!';
+    private const ERROR_CODE = 'docblock-return';
+    private const ERROR_MESSAGE = 'Invalid or missing docblock return type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

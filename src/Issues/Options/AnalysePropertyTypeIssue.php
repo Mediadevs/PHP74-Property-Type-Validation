@@ -7,17 +7,16 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedArgumentIssue.
+ * Class AnalysePropertyTypeIssue.
  *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
-class UntypedArgumentIssue extends AbstractIssue implements IssueInterface
+class AnalysePropertyTypeIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const KNOWN = false; // Whether type it should have is known.
-    private const ERROR_CODE = 'untyped-argument';
-    private const ERROR_MESSAGE = 'Invalid or missing argument type!';
+    private const ERROR_CODE = 'class-property';
+    private const ERROR_MESSAGE = 'Invalid or missing property type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

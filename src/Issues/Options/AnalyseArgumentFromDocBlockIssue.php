@@ -7,17 +7,16 @@ use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class UntypedKnownArgumentIssue.
+ * Class AnalyseArgumentFromDocBlockIssue.
  *
  * @package Mediadevs\PHPStrictlyTyped\Issues\Options
  */
-class UntypedKnownArgumentIssue extends AbstractIssue implements IssueInterface
+class AnalyseArgumentFromDocBlockIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const KNOWN = true; // Whether type it should have is known.
-    private const ERROR_CODE = 'untyped-known-argument';
-    private const ERROR_MESSAGE = 'Invalid argument type!';
+    private const ERROR_CODE = 'docblock-argument';
+    private const ERROR_MESSAGE = 'Invalid or missing docblock argument type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.
