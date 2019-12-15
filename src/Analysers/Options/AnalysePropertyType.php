@@ -7,19 +7,21 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseReturn.
+ * Class AnalysePropertyType.
  *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
-class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
+class AnalysePropertyType extends AbstractAnalyser implements AnalyserInterface
 {
     /**
-     * Analysing the return statements from the current instance.
+     * Analysing the property type and determines whether the return type is valid.
      *
      * @return Report
      */
     public function analyse(): Report
     {
+        // Todo: Write logic.
+
         return $this->report;
     }
 }

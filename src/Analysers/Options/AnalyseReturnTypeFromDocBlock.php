@@ -7,19 +7,21 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseProperties.
+ * Class AnalyseReturnTypeFromDocBlock.
  *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
-class AnalyseProperties extends AbstractAnalyser implements AnalyserInterface
+class AnalyseReturnTypeFromDocBlock extends AbstractAnalyser implements AnalyserInterface
 {
     /**
-     * Analysing the properties from the current instance.
+     * Analyses the docblock to determine whether the return type is valid.
      *
      * @return Report
      */
     public function analyse(): Report
     {
+        // Todo: Write logic.
+
         return $this->report;
     }
 }

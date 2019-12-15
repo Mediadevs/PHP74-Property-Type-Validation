@@ -3,7 +3,8 @@
 namespace Mediadevs\PHPStrictlyTyped\Issues;
 
 /**
- * Class AbstractIssue
+ * Class AbstractIssue.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Issues
  */
 abstract class AbstractIssue

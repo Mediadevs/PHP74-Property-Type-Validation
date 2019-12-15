@@ -7,19 +7,21 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseDocBlock.
+ * Class AnalyseReturnTypeFromMethod.
  *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
-class AnalyseDocBlocks extends AbstractAnalyser implements AnalyserInterface
+class AnalyseReturnTypeFromMethod extends AbstractAnalyser implements AnalyserInterface
 {
     /**
-     * Analysing the DocBlocks from the current instance.
+     * Analysing the hinted return type of the method from the current instance.
      *
      * @return Report
      */
     public function analyse(): Report
     {
+        // Todo: Write logic.
+
         return $this->report;
     }
 }

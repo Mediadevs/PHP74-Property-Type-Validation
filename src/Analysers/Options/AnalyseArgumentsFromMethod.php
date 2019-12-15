@@ -7,19 +7,21 @@ use Mediadevs\PHPStrictlyTyped\Analysers\AbstractAnalyser;
 use Mediadevs\PHPStrictlyTyped\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseMethods.
+ * Class AnalyseArgumentsFromMethod.
  *
  * @package Mediadevs\PHPStrictlyTyped\Analysers\Options
  */
-class AnalyseMethods extends AbstractAnalyser implements AnalyserInterface
+class AnalyseArgumentsFromMethod extends AbstractAnalyser implements AnalyserInterface
 {
     /**
-     * Analysing the methods from the current instance.
+     * Analysing the arguments from the method of current instance.
      *
      * @return Report
      */
     public function analyse(): Report
     {
+        // Todo: Write logic.
+
         return $this->report;
     }
 }

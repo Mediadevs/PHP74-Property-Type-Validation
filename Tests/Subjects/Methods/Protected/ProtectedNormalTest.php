@@ -4,6 +4,7 @@ namespace Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods;
 
 /**
  * Class ProtectedNormalTest.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods
  */
 class ProtectedNormalTest

@@ -6,6 +6,7 @@ use Mediadevs\PHPStrictlyTyped\Tests\TypedObject;
 
 /**
  * Class PrivateNormalTest
+ *
  * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Properties
  */
 class PrivateNormalTest

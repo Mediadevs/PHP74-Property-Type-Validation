@@ -19,7 +19,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class AnalyseCommand
+ * Class AnalyseCommand.
  * @package Mediadevs\PHPStrictlyTyped\Command
  */
 class AnalyseCommand extends Command

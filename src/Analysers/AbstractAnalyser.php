@@ -5,7 +5,7 @@ namespace Mediadevs\PHPStrictlyTyped\Analysers;
 use Mediadevs\PHPStrictlyTyped\Report;
 
 /**
- * Class AbstractAnalyser
+ * Class AbstractAnalyser.
  * @package Mediadevs\PHPStrictlyTyped\Analysers
  */
 abstract class AbstractAnalyser

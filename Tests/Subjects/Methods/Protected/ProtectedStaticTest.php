@@ -4,6 +4,7 @@ namespace Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods;
 
 /**
  * Class ProtectedStaticTest.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods
  */
 class ProtectedStaticTest

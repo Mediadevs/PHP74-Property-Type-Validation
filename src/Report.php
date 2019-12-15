@@ -5,7 +5,8 @@ namespace Mediadevs\PHPStrictlyTyped;
 use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
 
 /**
- * Class Report
+ * Class Report.
+ *
  * @package Mediadevs\PHPStrictlyTyped
  */
 class Report implements \Countable, \Iterator

@@ -3,7 +3,8 @@
 namespace Mediadevs\PHPStrictlyTyped\Traits;
 
 /**
- * Trait ReportTrait
+ * Trait ReportTrait.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Traits
  */
 trait ReportTrait

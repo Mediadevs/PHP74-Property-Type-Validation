@@ -6,6 +6,7 @@ use Mediadevs\PHPStrictlyTyped\Tests\TypedObject;
 
 /**
  * Class PrivateNullableTest.
+ *
  * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Properties
  */
 class PrivateNullableTest
