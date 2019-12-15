@@ -25,13 +25,6 @@ use phpDocumentor\Reflection\Types\Compound;
 class TypeHelper
 {
     /**
-     * The type which will be used for validation.
-     *
-     * @var null|Type
-     */
-    private ?Type $type;
-
-    /**
      * This method will be used in \DocBlockHelper to validate whether the parameter or return tag has the correct type.
      *
      * @param null|Type $type
@@ -46,93 +39,89 @@ class TypeHelper
             return false;
         }
 
-        if ($this->type($type)->isNull()) {
+        if ($this->isNull($type)) {
             return true;
         }
 
-        if ($this->type($type)->isMixed()) {
+        if ($this->isMixed($type)) {
             return true;
         }
 
-        if ($this->type($type)->isObject()) {
+        if ($this->isObject($type)) {
             return true;
         }
 
-        if ($this->type($type)->isCompound()) {
+        if ($this->isCompound($type)) {
             // The type is a compound (e.g union type, for example; "string|null")
-            return $this->parseCompoundTypes();
+            return $this->parseCompoundTypes($type);
         }
 
         return false;
     }
 
     /**
-     * Setting the type which will be used for validation.
+     * Validating whether $this->type is of instance "Null_".
      *
      * @param Type|null $type
      *
-     * @return $this
-     */
-    private function type(?Type $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Validating whether $this->type is of instance "Null_".
-     *
      * @return bool
      */
-    private function isNull(): bool
+    private function isNull(?Type $type): bool
     {
-        return ($this->type instanceof Null_) ? true : false;
+        return ($type instanceof Null_) ? true : false;
     }
 
     /**
      * Validating whether $this->type is of instance "Mixed_".
      *
+     * @param Type|null $type
+     *
      * @return bool
      */
-    private function isMixed(): bool
+    private function isMixed(?Type $type): bool
     {
-        return ($this->type instanceof Mixed_) ? true : false;
+        return ($type instanceof Mixed_) ? true : false;
     }
 
     /**
      * Validating whether $this->type is of instance "Object_".
      *
+     * @param Type|null $type
+     *
      * @return bool
      */
-    private function isObject(): bool
+    private function isObject(?Type $type): bool
     {
-        return ($this->type instanceof Object_) ? true : false;
+        return ($type instanceof Object_) ? true : false;
     }
 
     /**
      * Validating whether $this->type is of instance "Compound".
      *
+     * @param Type|null $type
+     *
      * @return bool
      *
      * @throws Exception
      */
-    private function isCompound(): bool
+    private function isCompound(?type $type): bool
     {
         // Whether type is a compound type and it has more than two items.
-        return (($this->type instanceof Compound) && ($this->type->getIterator()->count() === 2)) ? true : false;
+        return (($type instanceof Compound) && ($type->getIterator()->count() === 2)) ? true : false;
     }
 
     /**
      * Parsing through each type in the compound and validating whether the type is of instance "Null_".
      *
+     * @param Type|null $types
+     *
      * @return bool
      */
-    private function parseCompoundTypes(): bool
+    private function parseCompoundTypes(?Type $types): bool
     {
-        foreach ($this->type as $type) {
+        foreach ($types as $type) {
             // Creating a sub-instance of TypeHelper to validate whether the subject type is null.
-            return (new TypeHelper())->type($type)->isNull();
+            return (new TypeHelper())->isNull($type);
         }
 
         return false;
