@@ -7,16 +7,16 @@ use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalysePropertyDocBlockIssue.
+ * Class UntypedParameterDocBlockIssue.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalysePropertyDocBlockIssue extends AbstractIssue implements IssueInterface
+class UntypedParameterDocBlockIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'property-docblock';
-    private const ERROR_MESSAGE = 'Invalid or missing property type!';
+    private const ERROR_CODE = 'untyped-parameter-docblock';
+    private const ERROR_MESSAGE = 'Invalid or missing parameter type in docblock!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

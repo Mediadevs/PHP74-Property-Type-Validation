@@ -7,15 +7,15 @@ use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalyseReturnMethodIssue.
+ * Class UntypedReturnIssue.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalyseReturnMethodIssue extends AbstractIssue implements IssueInterface
+class UntypedReturnIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'return-method';
+    private const ERROR_CODE = 'untyped-return';
     private const ERROR_MESSAGE = 'Invalid or missing return type!';
 
     /**

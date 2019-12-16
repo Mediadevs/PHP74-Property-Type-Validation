@@ -7,15 +7,15 @@ use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalysePropertyIssue.
+ * Class UntypedPropertyIssue.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalysePropertyIssue extends AbstractIssue implements IssueInterface
+class UntypedPropertyIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'property';
+    private const ERROR_CODE = 'untyped-property';
     private const ERROR_MESSAGE = 'Invalid or missing property type!';
 
     /**
