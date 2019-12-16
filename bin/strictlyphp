@@ -17,7 +17,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 $analyseCommand = new AnalyseCommand();
 
 // Executing the parser
-$parser = new Application('PHP Strictly Typed');
+$parser = new Application('StrictlyPHP');
 $parser->add($analyseCommand);
 $parser->setDefaultCommand();
 $parser->run();
