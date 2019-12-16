@@ -46,7 +46,10 @@ class Configuration
         $excludedDirectories = $this->getExcludedDirectories($configuration);
 
         // Whether the directories are configured.
-        if (isset($includedDirectories) && isset($excludedDirectories)) {
+        if (!isset($includedDirectories) && !isset($excludedDirectories)) {
+            // Including all the configuration files.
+            $this->finder->in($this->currentWorkingDirectory);
+        } else {
             // Collecting the files which should be parsed from the configuration.
             if (isset($includedDirectories)) {
                 $this->finder->in($includedDirectories);
@@ -56,9 +59,6 @@ class Configuration
             if (isset($excludedDirectories)) {
                 $this->finder->exclude($excludedDirectories);
             }
-        } else {
-            // Including all the configuration files.
-            $this->finder->in($this->currentWorkingDirectory);
         }
 
         // Including all the files which end on ".php".
