@@ -32,30 +32,11 @@ class AnalyseCommand extends Command
     private const EXIT_CODE_SYNTAX_ISSUE = 4;
 
     /**
-     * The aliases which the parser can be called / executed by.
+     * By what name the command will be ran.
      *
-     * @var array
+     * @var string
      */
-    private array $aliases = array(
-        'analyze',
-    );
-
-    /**
-     * Configuring the setup for this command.
-     *
-     * @return void
-     */
-    protected function configure(): void
-    {
-       $this->setAliases($this->aliases);
-       $this->addOption(
-           'format',
-           null,
-           InputOption::VALUE_REQUIRED,
-           'Choose your format, options; "table", "compact"',
-           'table'
-       );
-    }
+    protected static string $defaultName = 'analyse';
 
     /**
      * Executing the command and applying the analysers.

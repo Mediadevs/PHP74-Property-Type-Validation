@@ -31,20 +31,7 @@ class Analyser
      */
     public function __construct(string $code)
     {
-        // Registering all the analysers the the array.
-        $this->analysers[] = new AnalyseMagicMethods($code);
-
-        // Parameter type
-        $this->analysers[] = new AnalyseParametersMethod($code);
-        $this->analysers[] = new AnalyseParametersMethodDocBlock($code);
-        // Property type
-
-        $this->analysers[] = new AnalyseProperty($code);
-        $this->analysers[] = new AnalysePropertyDocBlock($code);
-
-        // Return type
-        $this->analysers[] = new AnalyseReturnMethod($code);
-        $this->analysers[] = new AnalyseReturnMethodDocBlock($code);
+        // Todo: work on this.
     }
 
     /**

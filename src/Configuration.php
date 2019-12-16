@@ -4,7 +4,6 @@ namespace Mediadevs\StrictlyPHP;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Yaml\Exception\ParseException;
 
 class Configuration
 {
@@ -15,19 +14,8 @@ class Configuration
         'analyse-return-types',
     );
 
-    /**
-     * The file which will contain the configuration.
-     *
-     * @var string|null
-     */
-    private ?string $configurationFile;
-
-    /**
-     * The path which points to the location of the configuration.
-     *
-     * @var string|null
-     */
-    private ?string $configurationPath;
+    // The analysis configuration file.
+    private const STRICTLY_CONFIGURATION_FILE = '.strictly.yml';
 
     /**
      * The path of the current working directory.
@@ -44,43 +32,27 @@ class Configuration
     private Finder $finder;
 
     /**
-     * Configuration constructor.
-     *
-     * @param string|null $configurationFile
-     * @param string|null $configurationPath
-     */
-    public function __construct(?string $configurationFile, ?string $configurationPath)
-    {
-        $this->configurationFile = $configurationFile;
-        $this->configurationPath = $configurationPath;
-        $this->currentWorkingDirectory = getcwd();
-        $this->finder = new Finder();
-    }
-
-    /**
      * Collecting all the files which should be subject of analysis.
      *
      * @return \Iterator|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getFiles(): \Traversable
     {
-        // Determine whether the configuration file exists.
-        if ($this->configurationPathExists()) {
-            // Including all the configuration files.
-            $this->finder->in($this->configurationPath);
+        // Collecting the configuration.
+        $configuration = $this->getConfiguration();
 
-        } elseif ($this->configurationFileExists()) {
-            // Collecting the configuration.
-            $configuration = $this->getConfiguration();
+        // Configured directories.
+        $includedDirectories = $this->getIncludedDirectories($configuration);
+        $excludedDirectories = $this->getExcludedDirectories($configuration);
 
+        // Whether the directories are configured.
+        if (isset($includedDirectories) && isset($excludedDirectories)) {
             // Collecting the files which should be parsed from the configuration.
-            $includedDirectories = $this->getIncludedDirectories($configuration);
             if (isset($includedDirectories)) {
                 $this->finder->in($includedDirectories);
             }
 
             // Collecting the files which shouldn't be parsed from the configuration.
-            $excludedDirectories = $this->getExcludedDirectories($configuration);
             if (isset($excludedDirectories)) {
                 $this->finder->exclude($excludedDirectories);
             }
@@ -96,33 +68,13 @@ class Configuration
     }
 
     /**
-     * Whether the configuration file exists.
-     *
-     * @return bool
-     */
-    private function configurationFileExists(): bool
-    {
-        return (bool) ($this->configurationFile && file_exists($this->configurationFile)) ? true : false;
-    }
-
-    /**
-     * Whether the configuration path exists.
-     *
-     * @return bool
-     */
-    private function configurationPathExists(): bool
-    {
-        return (bool) ($this->configurationPath && is_dir($this->configurationPath)) ? true : false;
-    }
-
-    /**
      * Collecting the contents of the configuration file.
      *
      * @return array
      */
     private function getConfiguration(): array
     {
-        return Yaml::parseFile($this->configurationFile);
+        return Yaml::parseFile(self::STRICTLY_CONFIGURATION_FILE);
     }
 
     /**

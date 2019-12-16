@@ -5,6 +5,6 @@ project:
     directories:
         include:
             - 'src'
-            - 'tests'
         exclude:
+            - 'tests'
             - 'vendor'

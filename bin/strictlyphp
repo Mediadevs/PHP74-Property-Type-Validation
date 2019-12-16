@@ -14,10 +14,15 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 }
 
 // Creating the analyser
-$analyseCommand = new AnalyseCommand();
+$command = new AnalyseCommand();
 
 // Executing the parser
-$parser = new Application('StrictlyPHP');
-$parser->add($analyseCommand);
-$parser->setDefaultCommand();
-$parser->run();
+$analyser = new Application('StrictlyPHP');
+$analyser->add($command);
+$analyser->setDefaultCommand($command->getName());
+
+try {
+    $analyser->run();
+} catch (Exception $e) {
+    // Do nothing.
+}
