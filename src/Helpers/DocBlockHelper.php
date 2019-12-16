@@ -1,12 +1,12 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Helpers;
+namespace Mediadevs\StrictlyPHP\Helpers;
 
 use Exception;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
-use Mediadevs\PHPStrictlyTyped\Helpers\DocBlockHelpers\TypeHelper;
+use Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers\TypeHelper;
 
 /**
  * This class validates the doc blocks and does checks on the content and structure.
@@ -14,7 +14,7 @@ use Mediadevs\PHPStrictlyTyped\Helpers\DocBlockHelpers\TypeHelper;
  *
  * Class DocBlockHelper.
  *
- * @package Mediadevs\PHPStrictlyTyped\Helpers
+ * @package Mediadevs\StrictlyPHP\Helpers
  */
 class DocBlockHelper
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Issues;
+namespace Mediadevs\StrictlyPHP\Issues;
 
 /**
  * Interface IssueInterface.
  *
- * @package Mediadevs\PHPStrictlyTyped\Issues
+ * @package Mediadevs\StrictlyPHP\Issues
  */
 interface IssueInterface
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Issues\Options;
+namespace Mediadevs\StrictlyPHP\Issues\Options;
 
-use Mediadevs\PHPStrictlyTyped\Traits\ReportTrait;
-use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
-use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
+use Mediadevs\StrictlyPHP\Traits\ReportTrait;
+use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
+use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalyseArgumentFromMethodIssue.
+ * Class AnalysePropertyDocBlockIssue.
  *
- * @package Mediadevs\PHPStrictlyTyped\Issues\Options
+ * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalyseArgumentFromMethodIssue extends AbstractIssue implements IssueInterface
+class AnalysePropertyDocBlockIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'method-argument';
-    private const ERROR_MESSAGE = 'Invalid or missing argument type!';
+    private const ERROR_CODE = 'property-docblock';
+    private const ERROR_MESSAGE = 'Invalid or missing property type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

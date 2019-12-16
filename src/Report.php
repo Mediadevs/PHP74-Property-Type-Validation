@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped;
+namespace Mediadevs\StrictlyPHP;
 
-use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
+use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
  * Class Report.
  *
- * @package Mediadevs\PHPStrictlyTyped
+ * @package Mediadevs\StrictlyPHP
  */
 class Report implements \Countable, \Iterator
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Helpers\DocBlockHelpers;
+namespace Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers;
 
 use Exception;
 use phpDocumentor\Reflection\Type;
@@ -20,7 +20,7 @@ use phpDocumentor\Reflection\Types\Compound;
  *
  * Class TypeHelper.
  *
- * @package Mediadevs\PHPStrictlyTyped\Helpers\DocBlockHelpers
+ * @package Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers
  */
 class TypeHelper
 {

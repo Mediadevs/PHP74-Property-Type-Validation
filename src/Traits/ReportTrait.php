@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Traits;
+namespace Mediadevs\StrictlyPHP\Traits;
 
 /**
  * Trait ReportTrait.
  *
- * @package Mediadevs\PHPStrictlyTyped\Traits
+ * @package Mediadevs\StrictlyPHP\Traits
  */
 trait ReportTrait
 {

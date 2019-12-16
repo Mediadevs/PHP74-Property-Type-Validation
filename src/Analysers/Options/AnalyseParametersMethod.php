@@ -7,14 +7,14 @@ use Mediadevs\StrictlyPHP\Analysers\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analysers\AnalyserInterface;
 
 /**
- * Class AnalyseMagicMethods.
+ * Class AnalyseParametersMethod.
  *
  * @package Mediadevs\StrictlyPHP\Analysers\Options
  */
-class AnalyseMagicMethods extends AbstractAnalyser implements AnalyserInterface
+class AnalyseParametersMethod extends AbstractAnalyser implements AnalyserInterface
 {
     /**
-     * Analysing the magic methods from a class and determines whether the types are valid.
+     * Analysing the arguments from the method of current instance.
      *
      * @return Report
      */

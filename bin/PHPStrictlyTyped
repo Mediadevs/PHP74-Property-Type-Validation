@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\Console\Application;
-use Mediadevs\PHPStrictlyTyped\Command\AnalyseCommand;
+use Mediadevs\StrictlyPHP\Command\AnalyseCommand;
 
 // Including the composer autoloader
 if (file_exists(__DIR__.'/../../../autoload.php')) {

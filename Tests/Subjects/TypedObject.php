@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Tests;
+namespace Mediadevs\StrictlyPHP\Tests;
 
 /**
  * Class TypedObject.
  *
- * @package Mediadevs\PHPStrictlyTyped\Tests
+ * @package Mediadevs\StrictlyPHP\Tests
  */
 class TypedObject
 {

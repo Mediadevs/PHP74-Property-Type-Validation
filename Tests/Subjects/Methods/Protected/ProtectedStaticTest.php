@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods;
+namespace Mediadevs\StrictlyPHP\Tests\Subjects\Methods;
 
 /**
  * Class ProtectedStaticTest.
  *
- * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Methods
+ * @package Mediadevs\StrictlyPHP\Tests\Subjects\Methods
  */
 class ProtectedStaticTest
 {

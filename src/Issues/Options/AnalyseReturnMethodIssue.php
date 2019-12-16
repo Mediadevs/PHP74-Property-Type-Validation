@@ -1,22 +1,22 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Issues\Options;
+namespace Mediadevs\StrictlyPHP\Issues\Options;
 
-use Mediadevs\PHPStrictlyTyped\Traits\ReportTrait;
-use Mediadevs\PHPStrictlyTyped\Issues\AbstractIssue;
-use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
+use Mediadevs\StrictlyPHP\Traits\ReportTrait;
+use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
+use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalyseArgumentFromDocBlockIssue.
+ * Class AnalyseReturnMethodIssue.
  *
- * @package Mediadevs\PHPStrictlyTyped\Issues\Options
+ * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalyseArgumentFromDocBlockIssue extends AbstractIssue implements IssueInterface
+class AnalyseReturnMethodIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'docblock-argument';
-    private const ERROR_MESSAGE = 'Invalid or missing docblock argument type!';
+    private const ERROR_CODE = 'return-method';
+    private const ERROR_MESSAGE = 'Invalid or missing return type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

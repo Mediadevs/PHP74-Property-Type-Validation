@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Command;
+namespace Mediadevs\StrictlyPHP\Command;
 
 
 use PhpParser\Error;
 
-use Mediadevs\PHPStrictlyTyped\Analyser;
-use Mediadevs\PHPStrictlyTyped\Configuration;
-use Mediadevs\PHPStrictlyTyped\Issues\IssueInterface;
+use Mediadevs\StrictlyPHP\Analyser;
+use Mediadevs\StrictlyPHP\Configuration;
+use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Console\Helper\Table;
@@ -20,7 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class AnalyseCommand.
- * @package Mediadevs\PHPStrictlyTyped\Command
+ *
+ * @package Mediadevs\StrictlyPHP\Command
  */
 class AnalyseCommand extends Command
 {

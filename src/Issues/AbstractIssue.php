@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Issues;
+namespace Mediadevs\StrictlyPHP\Issues;
 
 /**
  * Class AbstractIssue.
  *
- * @package Mediadevs\PHPStrictlyTyped\Issues
+ * @package Mediadevs\StrictlyPHP\Issues
  */
 abstract class AbstractIssue
 {

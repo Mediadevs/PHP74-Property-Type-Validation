@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped\Tests\Subjects\Properties;
+namespace Mediadevs\StrictlyPHP\Tests\Subjects\Properties;
 
-use Mediadevs\PHPStrictlyTyped\Tests\TypedObject;
+use Mediadevs\StrictlyPHP\Tests\TypedObject;
 
 /**
  * Class PrivateNormalTest
  *
- * @package Mediadevs\PHPStrictlyTyped\Tests\Subjects\Properties
+ * @package Mediadevs\StrictlyPHP\Tests\Subjects\Properties
  */
 class PrivateNormalTest
 {

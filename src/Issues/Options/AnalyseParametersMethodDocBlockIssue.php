@@ -7,16 +7,16 @@ use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\IssueInterface;
 
 /**
- * Class AnalyseMagicMethodIssue.
+ * Class AnalyseParametersMethodDocBlockIssue.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Options
  */
-class AnalyseMagicMethodIssue extends AbstractIssue implements IssueInterface
+class AnalyseParametersMethodDocBlockIssue extends AbstractIssue implements IssueInterface
 {
     use ReportTrait;
 
-    private const ERROR_CODE = 'magic-method';
-    private const ERROR_MESSAGE = 'Invalid or missing magic method return type!';
+    private const ERROR_CODE = 'parameter-method-docblock';
+    private const ERROR_MESSAGE = 'Invalid or missing docblock parameter type!';
 
     /**
      * Registering errors and using a custom set of parameters for each issue.

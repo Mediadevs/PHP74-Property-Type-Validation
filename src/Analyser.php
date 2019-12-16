@@ -1,17 +1,19 @@
 <?php
 
-namespace Mediadevs\PHPStrictlyTyped;
+namespace Mediadevs\StrictlyPHP;
 
-use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseMagicMethods;
-use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalysePropertyType;
-use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseArgumentsFromMethod;
-use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseArgumentsFromDocBlock;
-use Mediadevs\PHPStrictlyTyped\Analysers\Options\AnalyseReturnTypeFromDocBlock;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseMagicMethods;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseProperty;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseParametersMethod;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseReturnMethod;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalysePropertyDocBlock;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseParametersMethodDocBlock;
+use Mediadevs\StrictlyPHP\Analysers\Options\AnalyseReturnMethodDocBlock;
 
 /**
  * Class Analyser.
  *
- * @package Mediadevs\PHPStrictlyTyped
+ * @package Mediadevs\StrictlyPHP
  */
 class Analyser
 {
@@ -30,12 +32,19 @@ class Analyser
     public function __construct(string $code)
     {
         // Registering all the analysers the the array.
-        $this->analysers[] = new AnalyseArgumentsFromDocBlock($code);
-        $this->analysers[] = new AnalyseArgumentsFromMethod($code);
         $this->analysers[] = new AnalyseMagicMethods($code);
-        $this->analysers[] = new AnalysePropertyType($code);
-        $this->analysers[] = new AnalyseReturnTypeFromDocBlock($code);
-        $this->analysers[] = new AnalyseArgumentsFromMethod($code);
+
+        // Parameter type
+        $this->analysers[] = new AnalyseParametersMethod($code);
+        $this->analysers[] = new AnalyseParametersMethodDocBlock($code);
+        // Property type
+
+        $this->analysers[] = new AnalyseProperty($code);
+        $this->analysers[] = new AnalysePropertyDocBlock($code);
+
+        // Return type
+        $this->analysers[] = new AnalyseReturnMethod($code);
+        $this->analysers[] = new AnalyseReturnMethodDocBlock($code);
     }
 
     /**
