@@ -3,7 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Tests\Subjects\Typed\PrivateVisibility;
 
 /**
- * Class PrivateStaticTest.
+ * Class ProtectedStaticTest.
  *
  * @package Mediadevs\StrictlyPHP\Tests\Subjects\Typed\PrivateVisibility
  */
