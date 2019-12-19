@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers;
+namespace Mediadevs\StrictlyPHP\Strategy\DocblockStrategy;
 
 use Exception;
 use phpDocumentor\Reflection\Type;
@@ -18,11 +18,11 @@ use phpDocumentor\Reflection\Types\Compound;
  * - Null_      (This is a nullable type)
  * - Compound   (Also known as union types, for example; "string|null")
  *
- * Class TypeHelper.
+ * Class DocBlockTypeStrategy.
  *
  * @package Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers
  */
-class TypeHelper
+class DocBlockTypeStrategy
 {
     /**
      * This method will be used in \DocBlockHelper to validate whether the parameter or return tag has the correct type.
@@ -120,8 +120,8 @@ class TypeHelper
     private function parseCompoundTypes(?Type $types): bool
     {
         foreach ($types as $type) {
-            // Creating a sub-instance of TypeHelper to validate whether the subject type is null.
-            return (new TypeHelper())->isNull($type);
+            // Creating a sub-instance of DocBlockTypeStrategy to validate whether the subject type is null.
+            return (new DocBlockTypeStrategy())->isNull($type);
         }
 
         return false;
