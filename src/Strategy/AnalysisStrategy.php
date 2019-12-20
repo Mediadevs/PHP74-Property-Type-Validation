@@ -108,11 +108,11 @@ class AnalysisStrategy
     {
         // Validating what the current node is, based upon the type the strategy will be adjusted.
         if ($this->nodeStrategy->isClass($node)) {
-            // Todo: Class strategy
+            // No strategy
         }
 
         if ($this->nodeStrategy->isProperty($node)) {
-            // Todo: Property strategy
+
         }
 
         if ($this->nodeStrategy->isFunctionLike($node)) {
@@ -147,6 +147,13 @@ class AnalysisStrategy
             // Todo: Expression strategy
         }
 
+        if ($this->hasSubNode($node)) {
+            foreach ($node->stmts as $subNode) {
+                // Analysing the child node.
+                $this->analyseNode($subNode);
+            }
+        }
+
         return false;
     }
 
@@ -161,5 +168,25 @@ class AnalysisStrategy
     private function hasSubNode(Node $node): bool
     {
         return (bool) (isset($node->stmts)) ? true : false;
+    }
+
+    /**
+     * This method transforms the docblock string from the php-parser into a DocBlock instance
+     * The DocBlock instance will be used to analyse the docblock to determine whether it matches
+     * the configured analysis.
+     *
+     * @param string|null $docComment
+     *
+     * @return \phpDocumentor\Reflection\DocBlock|null
+     */
+    private function getDocBlock(?string $docComment): ?DocBlock
+    {
+        try {
+            return $this->docBlockFactory->create($docComment);
+        } catch (\Exception $e) {
+            // Something wen't wrong. Analysis will continue without documentation.
+        }
+
+        return null;
     }
 }
