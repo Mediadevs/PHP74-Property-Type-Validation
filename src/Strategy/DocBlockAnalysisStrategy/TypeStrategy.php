@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Strategy\DocblockStrategy;
+namespace Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy;
 
 use Exception;
 use phpDocumentor\Reflection\Type;
@@ -18,11 +18,11 @@ use phpDocumentor\Reflection\Types\Compound;
  * - Null_      (This is a nullable type)
  * - Compound   (Also known as union types, for example; "string|null")
  *
- * Class DocBlockTypeStrategy.
+ * Class TypeStrategy.
  *
- * @package Mediadevs\StrictlyPHP\Helpers\DocBlockHelpers
+ * @package Mediadevs\StrictlyPHP\Helpers\DocBlockAnalysisStrategy
  */
-class DocBlockTypeStrategy
+class TypeStrategy
 {
     /**
      * This method will be used in \DocBlockHelper to validate whether the parameter or return tag has the correct type.
@@ -52,8 +52,7 @@ class DocBlockTypeStrategy
         }
 
         if ($this->isCompound($type)) {
-            // The type is a compound (e.g union type, for example; "string|null")
-            return $this->parseCompoundTypes($type);
+            return true;
         }
 
         return false;
@@ -66,7 +65,7 @@ class DocBlockTypeStrategy
      *
      * @return bool
      */
-    private function isNull(?Type $type): bool
+    public function isNull(?Type $type): bool
     {
         return ($type instanceof Null_) ? true : false;
     }
@@ -78,7 +77,7 @@ class DocBlockTypeStrategy
      *
      * @return bool
      */
-    private function isMixed(?Type $type): bool
+    public function isMixed(?Type $type): bool
     {
         return ($type instanceof Mixed_) ? true : false;
     }
@@ -90,7 +89,7 @@ class DocBlockTypeStrategy
      *
      * @return bool
      */
-    private function isObject(?Type $type): bool
+    public function isObject(?Type $type): bool
     {
         return ($type instanceof Object_) ? true : false;
     }
@@ -104,10 +103,15 @@ class DocBlockTypeStrategy
      *
      * @throws Exception
      */
-    private function isCompound(?type $type): bool
+    public function isCompound(?type $type): bool
     {
         // Whether type is a compound type and it has more than two items.
-        return (($type instanceof Compound) && ($type->getIterator()->count() === 2)) ? true : false;
+        if (($type instanceof Compound) && ($type->getIterator()->count() === 2)) {
+            // The type is a compound (e.g union type, for example; "string|null")
+            return $this->parseCompoundTypes($type);
+        }
+
+        return false;
     }
 
     /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Strategy\DocblockStrategy;
+namespace Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 /**
  * Class InheritDocStrategy.
  *
- * @package Mediadevs\StrictlyPHP\Strategy\DocblockStrategy
+ * @package Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy
  */
 class InheritDocStrategy extends AbstractDocBlockStrategy
 {

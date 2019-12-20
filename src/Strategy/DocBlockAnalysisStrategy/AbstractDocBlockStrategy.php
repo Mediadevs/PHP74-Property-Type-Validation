@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Strategy\DocblockStrategy;
+namespace Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy;
 
 use phpDocumentor\Reflection\DocBlock;
 
@@ -21,7 +21,7 @@ abstract class AbstractDocBlockStrategy
     /**
      * The class for parsing the docblock types.
      *
-     * @var \Mediadevs\StrictlyPHP\Strategy\DocblockStrategy\DocBlockTypeStrategy
+     * @var \Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy\DocBlockTypeStrategy
      */
     protected DocBlockTypeStrategy $typeStrategy;
 
