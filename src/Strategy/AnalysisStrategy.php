@@ -2,7 +2,17 @@
 
 namespace Mediadevs\StrictlyPHP\Strategy;
 
+use PhpParser\Node;
+use PhpParser\ParserFactory;
+use PhpParser\Node\Identifier;
 use Mediadevs\StrictlyPHP\Report;
+use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlockFactory;
+use Mediadevs\StrictlyPHP\Strategy\CodeAnalysisStrategy\NodeStrategy;
+use Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy\TagStrategy;
+use Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy\InheritDocStrategy;
+use \Mediadevs\StrictlyPHP\Strategy\CodeAnalysisStrategy\TypeStrategy as CodeTypeStrategy;
+use Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy\TypeStrategy as DocTypeStrategy;
 
 /**
  * This is the main Analysis class, this will validate the project which this library has been implemented in based
@@ -19,16 +29,72 @@ use Mediadevs\StrictlyPHP\Report;
 class AnalysisStrategy
 {
     /**
+     * The code which is subject to analysis.
+     *
+     * @var string
+     */
+    private string $code;
+
+    /**
+     * The instance of report where all the errors will be generated with.
+     *
+     * @var Report
+     */
+    private Report $report;
+
+    /**
+     * This class will handle all the docblocks.
+     *
+     * @var DocBlockFactory
+     */
+    private DocBlockFactory $docBlockFactory;
+
+    /**
+     * The strategy for parsing the nodes.
+     *
+     * @var NodeStrategy
+     */
+    private NodeStrategy $nodeStrategy;
+
+    /**
+     * The strategy for parsing the types.
+     *
+     * @var CodeTypeStrategy
+     */
+    private CodeTypeStrategy $typeStrategy;
+
+    /**
+     * AnalysisStrategy constructor.
+     *
+     * @param string $code
+     */
+    public function __construct(string $code)
+    {
+        $this->code = $code;
+        $this->report = new Report();
+        $this->docBlockFactory = DocBlockFactory::createInstance();
+
+        // PHP-Parser Strategies
+        $this->nodeStrategy = new NodeStrategy();
+        $this->typeStrategy = new CodeTypeStrategy();
+    }
+
+    /**
      * This is the only method which is will be activated by running the "vendor/bin/strictly-php" command.
      * From here on the analysis will be run and it will return a pretty and clear report to the user.
      *
-     * @param string $code
-     *
      * @return Report
      */
-    public function analyse(string $code): Report
+    public function analyse(): Report
     {
+        $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
+        $nodes = $parser->parse($this->code);
 
+        foreach ($nodes as $node) {
+            $this->analyseNode($node);
+        }
+
+        return $this->report;
     }
 
     /**
@@ -41,6 +107,46 @@ class AnalysisStrategy
     private function analyseNode(Node $node): string
     {
         // Validating what the current node is, based upon the type the strategy will be adjusted.
+        if ($this->nodeStrategy->isClass($node)) {
+            // Todo: Class strategy
+        }
+
+        if ($this->nodeStrategy->isProperty($node)) {
+            // Todo: Property strategy
+        }
+
+        if ($this->nodeStrategy->isFunctionLike($node)) {
+            // Todo: Function type; methods / functions strategy
+        }
+
+        if ($this->nodeStrategy->isMethod($node)) {
+            // Todo: Method strategy
+        }
+
+        if ($this->nodeStrategy->isMethodCall($node)) {
+            // Todo: Method call strategy
+        }
+
+        if ($this->nodeStrategy->isFunction($node)) {
+            // Todo: Function  strategy
+        }
+
+        if ($this->nodeStrategy->isFunctionCall($node)) {
+            // Todo: Function call strategy
+        }
+
+        if ($this->nodeStrategy->isMagicMethod($node)) {
+            // Todo: Magic method strategy
+        }
+
+        if ($this->nodeStrategy->isParameter($node)) {
+            // Todo: Parameter strategy
+        }
+
+        if ($this->nodeStrategy->isExpression($node)) {
+            // Todo: Expression strategy
+        }
+
         return false;
     }
 
@@ -54,6 +160,6 @@ class AnalysisStrategy
      */
     private function hasSubNode(Node $node): bool
     {
-        return false;
+        return (bool) (isset($node->stmts)) ? true : false;
     }
 }

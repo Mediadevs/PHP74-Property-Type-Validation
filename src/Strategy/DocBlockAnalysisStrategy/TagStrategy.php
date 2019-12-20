@@ -11,8 +11,25 @@ namespace Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy;
  *
  * @package Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy
  */
-class TagStrategy extends AbstractDocBlockStrategy
+class TagStrategy
 {
+    /**
+     * The docblock which is target for this analysis.
+     *
+     * @var \phpDocumentor\Reflection\DocBlock
+     */
+    protected DocBlock $docBlock;
+
+    /**
+     * TypeStrategy constructor.
+     *
+     * @param DocBlock $docBlock
+     */
+    public function __construct(DocBlock $docBlock)
+    {
+        $this->docBlock = $docBlock;
+    }
+
     /**
      * Does an analysis on the docblock to validate whether it contains the given tag(s)
      *

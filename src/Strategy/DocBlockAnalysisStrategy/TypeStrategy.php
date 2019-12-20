@@ -25,6 +25,23 @@ use phpDocumentor\Reflection\Types\Compound;
 class TypeStrategy
 {
     /**
+     * The docblock which is target for this analysis.
+     *
+     * @var \phpDocumentor\Reflection\DocBlock
+     */
+    protected DocBlock $docBlock;
+
+    /**
+     * TypeStrategy constructor.
+     *
+     * @param DocBlock $docBlock
+     */
+    public function __construct(DocBlock $docBlock)
+    {
+        $this->docBlock = $docBlock;
+    }
+
+    /**
      * This method will be used in \DocBlockHelper to validate whether the parameter or return tag has the correct type.
      *
      * @param null|Type $type

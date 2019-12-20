@@ -9,13 +9,30 @@ use phpDocumentor\Reflection\DocBlock\Tags\Generic;
  *
  * @package Mediadevs\StrictlyPHP\Strategy\DocBlockAnalysisStrategy
  */
-class InheritDocStrategy extends AbstractDocBlockStrategy
+class InheritDocStrategy
 {
     private const TAGS = array(
         '{@inheritdoc}',
         '@inheritdoc',
         'inheritdoc'
     );
+
+    /**
+     * The docblock which is target for this analysis.
+     *
+     * @var \phpDocumentor\Reflection\DocBlock
+     */
+    protected DocBlock $docBlock;
+
+    /**
+     * TypeStrategy constructor.
+     *
+     * @param DocBlock $docBlock
+     */
+    public function __construct(DocBlock $docBlock)
+    {
+        $this->docBlock = $docBlock;
+    }
 
     /**
      * Validating whether the docblock is inherited.
