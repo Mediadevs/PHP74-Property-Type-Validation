@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Strategy;
+namespace Mediadevs\StrictlyPHP\Strategy\CodeAnalysisStrategy;
 
 use PhpParser\Node;
 
@@ -10,7 +10,7 @@ use PhpParser\Node;
  * For more details about php primitive types you can visit the original documentation.
  * @see https://www.php.net/manual/en/language.types.intro.php
  *
- * @package Mediadevs\StrictlyPHP\Strategy
+ * @package Mediadevs\StrictlyPHP\Strategy\CodeAnalysisStrategy
  */
 class TypeStrategy
 {
@@ -21,7 +21,7 @@ class TypeStrategy
      *
      * @return string|null
      */
-    public function getTypeStrategy(Node $node): ?string
+    public function getType(Node $node): ?string
     {
         // Validating whether the type is (scalar) string.
         if ($this->isTypeString($node)) {
