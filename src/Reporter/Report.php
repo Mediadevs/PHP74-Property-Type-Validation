@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP;
 
-use Mediadevs\StrictlyPHP\Issues\IssueInterface;
+use Mediadevs\StrictlyPHP\Reporter\IssueInterface;
 
 /**
  * Class Report.

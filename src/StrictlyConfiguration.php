@@ -6,18 +6,42 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class Configuration.
+ * Class StrictlyConfiguration.
  *
  * @package Mediadevs\StrictlyPHP
  */
-class Configuration
+class StrictlyConfiguration
 {
     /** @var array all the analysers which can be applied */
     private const ANALYSER_OPTIONS = array(
-      'analyse-property',
-      'analyse-method',
-      'analyse-return',
-      'analyse-params',
+        // Function Analysers
+        'analyse-function',
+        'analyse-function-parameters',
+        'analyse-function-return',
+        'analyse-function-parameters-docblock',
+        'analyse-function-return-docblock',
+        'analyse-function-docblock',
+        'analyse-function-callable',
+        // Magic Method Analysers
+        'analyse-magic-method',
+        'analyse-magic-method-parameters',
+        'analyse-magic-method-return',
+        'analyse-magic-method-parameters-docblock',
+        'analyse-magic-method-return-docblock',
+        'analyse-magic-method-docblock',
+        'analyse-magic-method-callable',
+        // Method Analysers
+        'analyse-method',
+        'analyse-method-parameters',
+        'analyse-method-return',
+        'analyse-method-parameters-docblock',
+        'analyse-method-return-docblock',
+        'analyse-method-docblock',
+        'analyse-method-callable',
+        // Property Analysers
+        'analyse-property',
+        'analyse-property-docblock',
+        'analyse-property-assignable',
     );
 
     // The analysis configuration file.
@@ -45,7 +69,7 @@ class Configuration
     private array $configuration = array();
 
     /**
-     * Configuration constructor.
+     * StrictlyConfiguration constructor.
      */
     public function __construct()
     {

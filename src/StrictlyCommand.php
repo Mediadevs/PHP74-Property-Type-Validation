@@ -4,11 +4,6 @@ namespace Mediadevs\StrictlyPHP\Command;
 
 
 use PhpParser\Error;
-
-use Mediadevs\StrictlyPHP\Analyser;
-use Mediadevs\StrictlyPHP\Configuration;
-use Mediadevs\StrictlyPHP\Issues\IssueInterface;
-
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Command\Command;
@@ -19,11 +14,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class AnalyseCommand.
+ * Class StrictlyCommand.
  *
  * @package Mediadevs\StrictlyPHP\Command
  */
-class AnalyseCommand extends Command
+class StrictlyCommand extends Command
 {
     // Exit codes which can occur when parsing the project
     private const EXIT_CODE_INVALID_CONFIGURATION = 1;
