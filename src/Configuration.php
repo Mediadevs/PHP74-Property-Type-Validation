@@ -5,13 +5,19 @@ namespace Mediadevs\StrictlyPHP;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Class Configuration.
+ *
+ * @package Mediadevs\StrictlyPHP
+ */
 class Configuration
 {
-    // All the filters which can be applied for project validation.
-    private const STRICTLY_FILTERS = array(
-        'analyse-property-types',
-        'analyse-parameters-types',
-        'analyse-return-types',
+    /** @var array all the analysers which can be applied */
+    private const ANALYSER_OPTIONS = array(
+      'analyse-property',
+      'analyse-method',
+      'analyse-return',
+      'analyse-params',
     );
 
     // The analysis configuration file.
@@ -32,6 +38,21 @@ class Configuration
     private Finder $finder;
 
     /**
+     * The configuration for the analyser.
+     *
+     * @var array
+     */
+    private array $configuration = array();
+
+    /**
+     * Configuration constructor.
+     */
+    public function __construct()
+    {
+        $this->configuration = Yaml::parseFile(self::STRICTLY_CONFIGURATION_FILE);
+    }
+
+    /**
      * Collecting all the files which should be subject of analysis.
      *
      * @return \Iterator|\Symfony\Component\Finder\SplFileInfo[]
@@ -39,8 +60,8 @@ class Configuration
     public function getFiles(): \Traversable
     {
         // Configured directories.
-        $includedDirectories = $this->getIncludedDirectories($this->getConfiguration());
-        $excludedDirectories = $this->getExcludedDirectories($this->getConfiguration());
+        $includedDirectories = $this->getIncludedDirectories();
+        $excludedDirectories = $this->getExcludedDirectories();
 
         // Whether the directories are configured.
         if (!isset($includedDirectories) && !isset($excludedDirectories)) {
@@ -65,60 +86,115 @@ class Configuration
     }
 
     /**
-     * Collecting the contents of the configuration file.
+     * Collecting all analysers which can be applied in the analysis.
      *
      * @return array
      */
-    private function getConfiguration(): array
+    public function getAnalysers(): array
     {
-        return Yaml::parseFile(self::STRICTLY_CONFIGURATION_FILE);
+        // No enabled or disabled analysers have been configured, all analysers will be used.
+        $analysers = self::ANALYSER_OPTIONS;
+
+        // The analyser configuration.
+        $enabledAnalysers = $this->getEnabledAnalysers() ?? false;
+        $disabledAnalysers = $this->getDisabledAnalysers() ?? false;
+
+        // There are enabled and disabled analysers configured.
+        // We will return the base analysers plus the enabled analysers minus the disabled analysers.
+        if ($enabledAnalysers && $disabledAnalysers) {
+            $analysers = self::ANALYSER_OPTIONS;
+
+            // Adding the enabled analysers to the base analysers.
+            foreach ($enabledAnalysers as $enabledAnalyser) {
+                $analysers[] = $enabledAnalyser;
+            }
+
+            // Removing the disabled analysers from the enabled and base analysers list.
+            foreach ($disabledAnalysers as $disabledAnalyser) {
+                unset($analysers[$disabledAnalyser]);
+            }
+        }
+
+        // There are no enabled analysers, only disabled analysers.
+        // The used analysers will be all the analysers minus the disabled ones.
+        if ($disabledAnalysers && !$enabledAnalysers) {
+            $analysers = array_diff( self::ANALYSER_OPTIONS, $disabledAnalysers);
+        }
+
+        // There are no enabled analysers, only disabled analysers.
+        // The used analysers will be all the analysers minus the disabled ones.
+        if ($enabledAnalysers && !$disabledAnalysers) {
+            $analysers = $enabledAnalysers;
+        }
+
+        return $analysers;
     }
 
     /**
-     * Collecting all analysers which have been enabled in the configuration.
+     * Whether the configuration has enabled analysers.
      *
-     * @param array $configuration
-     *
-     * @return array
+     * @return bool
      */
-    private function getEnabledAnalysers(array $configuration): array
+    private function hasEnabledAnalysers(): bool
     {
-        return $configuration['project']['analysers']['enabled'];
+        return (bool) (isset($this->configuration['project']['analysers']['enabled'])) ? true : false;
     }
 
     /**
-     * Collecting all analysers which have been disabled in the configuration.
+     * Collecting all the analysers which have been enabled.
      *
-     * @param array $configuration
-     *
-     * @return array
+     * @return array|null
      */
-    private function getDisabledAnalysers(array $configuration): array
+    private function getEnabledAnalysers(): ?array
     {
-        return $configuration['project']['analysers']['disabled'];
+        if ($this->hasEnabledAnalysers()) {
+            return (array) $this->configuration['project']['analysers']['enabled'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Whether the configuration has disabled analysers..
+     *
+     * @return bool
+     */
+    private function hasDisabledAnalysers(): bool
+    {
+        return (bool) (isset($this->configuration['project']['analysers']['disabled'])) ? true : false;
+    }
+
+    /**
+     * Collecting all the analysers which have been disabled.
+     *
+     * @return array|null
+     */
+    private function getDisabledAnalysers(): ?array
+    {
+        if ($this->hasDisabledAnalysers()) {
+            return (array) $this->configuration['project']['analysers']['disabled'];
+        }
+
+        return null;
     }
 
     /**
      * Collecting all the names of the directories which should be analysed.
      *
-     * @param array $configuration
-     *
      * @return array
      */
-    private function getIncludedDirectories(array $configuration): array
+    private function getIncludedDirectories(): array
     {
-        return $configuration['project']['directories']['included'];
+        return $this->configuration['project']['directories']['included'];
     }
 
     /**
      * Collecting all the names of the directories which shouldn't be analysed.
      *
-     * @param array $configuration
-     *
      * @return array
      */
-    private function getExcludedDirectories(array $configuration): array
+    private function getExcludedDirectories(): array
     {
-        return $configuration['project']['directories']['excluded'];
+        return $this->configuration['project']['directories']['excluded'];
     }
 }
