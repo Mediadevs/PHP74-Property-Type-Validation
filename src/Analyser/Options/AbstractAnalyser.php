@@ -30,8 +30,9 @@ abstract class AbstractAnalyser
      * The basic analyser, each analysis type has it's own analysers but they will all cohort to this one.
      *
      * @param string $code
+     * @param array  $filters
      *
      * @return \Mediadevs\StrictlyPHP\Report|null
      */
-    abstract public function analyse(string $code): ?Report;
+    abstract public function analyse(string $code, array $filters): ?Report;
 }

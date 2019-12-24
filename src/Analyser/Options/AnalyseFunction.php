@@ -3,6 +3,8 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
 use Mediadevs\StrictlyPHP\Report;
+use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
+use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseParameters;
 
 /**
  * Class AnalyseFunction.
@@ -11,12 +13,16 @@ use Mediadevs\StrictlyPHP\Report;
  */
 class AnalyseFunction extends AbstractAnalyser
 {
+    use AnalyseReturn;
+    use AnalyseParameters;
+
     /**
      * @param string $code
+     * @param array  $filters
      *
      * @return \Mediadevs\StrictlyPHP\Report|null
      */
-    public function analyse(string $code): ?Report
+    public function analyse(string $code, array $filters): ?Report
     {
         return $this->report;
     }
