@@ -2,12 +2,14 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Traits;
 
+use PhpParser\Node;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\Compound;
+use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 /**
@@ -17,6 +19,18 @@ use phpDocumentor\Reflection\DocBlock\Tags\Generic;
  */
 trait AnalyseDocblock
 {
+    /**
+     * Collecting the docblock from the node and returning the docblock as a Docblock instance of phpDocumentor.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return \phpDocumentor\Reflection\DocBlock
+     */
+    protected function getDocblockFromNode(Node $node): DocBlock
+    {
+        return DocBlockFactory::createInstance()->create($node->getDocComment()->getText());
+    }
+
     /**
      * Collecting the return from the docblock.
      * If "Null" is returned it means there is NO return type, if a string is returned there is a return type.

@@ -15,7 +15,6 @@ use Mediadevs\StrictlyPHP\Reporter\Traits\ReportParameter;
  */
 class ReportCallable extends AbstractReport
 {
-    use ReportReturn;
     use ReportParameter;
 
     /**
