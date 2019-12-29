@@ -3,7 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
 use Mediadevs\StrictlyPHP\Report;
-use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseParameters;
+use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseDocblock;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseProperties;
 
 /**
@@ -13,6 +13,7 @@ use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseProperties;
  */
 class AnalyseProperty extends AbstractAnalyser
 {
+    use AnalyseDocblock;
     use AnalyseProperties;
 
     /**

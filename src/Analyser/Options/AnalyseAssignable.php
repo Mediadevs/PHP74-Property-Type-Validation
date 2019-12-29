@@ -3,20 +3,18 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
 use Mediadevs\StrictlyPHP\Report;
-use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseDocblock;
-use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseParameters;
+use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseProperties;
 
 /**
- * Class AnalyseMagicMethodDocblock.
+ * Class AnalyseAssignable.
  *
  * @package Mediadevs\StrictlyPHP\Analyser\Options
  */
-class AnalyseMagicMethodDocblock extends AbstractAnalyser
+class AnalyseAssignable extends AbstractAnalyser
 {
-    use AnalyseReturn;
     use AnalyseDocblock;
-    use AnalyseParameters;
+    use AnalyseProperties;
 
     /**
      * The basic analyser, each analysis type has it's own analysers but they will all cohort to this one.

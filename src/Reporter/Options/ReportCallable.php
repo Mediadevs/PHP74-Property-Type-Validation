@@ -1,21 +1,21 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Options;
+namespace Mediadevs\StrictlyPHP\Reporter\Options;
 
 use Mediadevs\StrictlyPHP\Reporter\AbstractReport;
 use Mediadevs\StrictlyPHP\Reporter\Traits\ReportReturn;
-use Mediadevs\StrictlyPHP\Reporter\Traits\ReportDocblock;
 use Mediadevs\StrictlyPHP\Reporter\Traits\ReportParameter;
 
 /**
- * Class ReportFunctionDocblock.
+ * TODO: Create this report class.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Options
+ * Class ReportCallable.
+ *
+ * @package Mediadevs\StrictlyPHP\Reporter\Options
  */
-class ReportFunctionDocblock extends AbstractReport
+class ReportCallable extends AbstractReport
 {
     use ReportReturn;
-    use ReportDocblock;
     use ReportParameter;
 
     /**
