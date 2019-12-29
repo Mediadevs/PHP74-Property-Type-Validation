@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Traits;
 
 use PhpParser\Node;
+use Mediadevs\StrictlyPHP\Report;
 
 /**
  * Trait AnalyseParameters.
