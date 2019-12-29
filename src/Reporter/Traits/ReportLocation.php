@@ -9,5 +9,13 @@ namespace Mediadevs\StrictlyPHP\Reporter\Traits;
  */
 Trait ReportLocation
 {
-
+    /**
+     * Generating a message to report where issue resides.
+     *
+     * @return string
+     */
+    protected function location(): string
+    {
+        return '';
+    }
 }
