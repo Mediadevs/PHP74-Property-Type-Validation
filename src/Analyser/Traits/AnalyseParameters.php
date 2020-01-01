@@ -15,11 +15,11 @@ trait AnalyseParameters
     /**
      * Collecting all the parameters from a "function like" node.
      *
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PhpParser\Node $node
      *
      * @return \PhpParser\Node\Param[]
      */
-    protected function getParameters(Node\FunctionLike $node): array
+    protected function getParameters(Node $node): array
     {
         return $node->getParams();
     }

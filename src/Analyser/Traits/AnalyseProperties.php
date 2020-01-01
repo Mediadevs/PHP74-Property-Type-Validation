@@ -14,11 +14,11 @@ trait AnalyseProperties
     /**
      * Collecting the property type based upon the node.
      *
-     * @param \PhpParser\Node\Stmt\Property $node
+     * @param \PhpParser\Node $node
      *
      * @return string|null
      */
-    protected function getPropertyType(Node\Stmt\Property $node): ?string
+    protected function getPropertyType(Node $node): ?string
     {
         return $node->getType();
     }

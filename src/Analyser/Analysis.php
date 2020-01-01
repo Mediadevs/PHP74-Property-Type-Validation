@@ -82,11 +82,11 @@ class Analysis
     /**
      * Analysing the code based upon the given filters.
      *
-     * @param string $code
+     * @param Node $node
      *
      * @return Report
      */
-    public function analyse(string $code): Report
+    public function analyse(Node $node): Report
     {
         $analysers = (new StrictlyConfiguration())->getAnalysers();
 

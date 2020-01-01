@@ -14,11 +14,11 @@ trait AnalyseReturn
     /**
      * Collecting all the parameters from a "function like" node.
      *
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PhpParser\Node $node
      *
      * @return string|null
      */
-    protected function getReturnType(Node\FunctionLike $node): ?string
+    protected function getReturnType(Node $node): ?string
     {
         return $node->getReturnType();
     }

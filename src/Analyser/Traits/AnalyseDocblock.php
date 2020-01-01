@@ -51,6 +51,18 @@ trait AnalyseDocblock
     }
 
     /**
+     * Collecting the parameters from the docblock.
+     *
+     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     *
+     * @return array|null
+     */
+    protected function getParametersFromDocblock(DocBlock $docBlock): ?array
+    {
+        return $docBlock->getTagsByName('param');
+    }
+
+    /**
      * Collecting the parameter from the docblock based upon the given parameter.
      * If "Null" is returned it means there is NO parameter type, if a string is returned there is a parameter type.
      *

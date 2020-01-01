@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
-use PhpParser\Node\FunctionLike;
+use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Report;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseDocblock;
@@ -20,13 +20,16 @@ class AnalyseFunction extends AbstractAnalyser
     use AnalyseParameters;
 
     /**
-     * @param string $code
-     * @param array  $filters
+     * The basic analyser, each analysis type has it's own analysers but they will all cohort to this one.
+     *
+     * @param \PhpParser\Node $node
+     * @param array           $filters
      *
      * @return \Mediadevs\StrictlyPHP\Report|null
      */
-    public function analyse(string $code, array $filters): ?Report
+    public function analyse(Node $node, array $filters): ?Report
     {
+        // The analysis filters.
         $analyseFunction                    = (bool) isset($filters['analyse-function']);
         $analyseFunctionParameters          = (bool) isset($filters['analyse-function-parameters']);
         $analyseFunctionReturn              = (bool) isset($filters['analyse-function-return']);
@@ -35,28 +38,28 @@ class AnalyseFunction extends AbstractAnalyser
         $analyseFunctionReturnDocblock      = (bool) isset($filters['analyse-function-return-docblock']);
         $analyseFunctionCallable            = (bool) isset($filters['analyse-function-callable']);
 
-        // Analyse both the function and the docblock.
+        // Analyse both the function and the docblock (global scopes).
         if ($analyseFunction && $analyseFunctionDocblock) {
             // Both global configuration scopes are enabled, the analysis configuration now depends on the
             // specific parameter / return analysis.
-            $this->parameterAnalysis($code, $analyseFunctionParameters, $analyseFunctionParametersDocblock);
-            $this->returnAnalysis($code, $analyseFunctionReturn, $analyseFunctionReturnDocblock);
+            $this->parameterAnalysis($node, $analyseFunctionParameters, $analyseFunctionParametersDocblock);
+            $this->returnAnalysis($node, $analyseFunctionReturn, $analyseFunctionReturnDocblock);
         }
 
-        // Analyse only the function and not the docblock.
+        // Analyse only the function and not the docblock (global scopes).
         if ($analyseFunction && !$analyseFunctionDocblock) {
             // Only the function analysis is enabled, the analysis configuration now depends on the
             // specific parameter / return analysis and the docblock analysis is disabled on default.
-            $this->parameterAnalysis($code, $analyseFunctionParameters, false);
-            $this->returnAnalysis($code, $analyseFunctionReturn, false);
+            $this->parameterAnalysis($node, $analyseFunctionParameters, false);
+            $this->returnAnalysis($node, $analyseFunctionReturn, false);
         }
 
-        // Analyse only the docblock and not the function.
+        // Analyse only the docblock and not the function (global scopes).
         if ($analyseFunction && !$analyseFunctionDocblock) {
             // Only the docblock analysis is enabled, the analysis configuration now depends on the
             // specific parameter / return analysis and the function analysis is disabled on default.
-            $this->parameterAnalysis($code, false, $analyseFunctionParametersDocblock);
-            $this->returnAnalysis($code, false, $analyseFunctionReturnDocblock);
+            $this->parameterAnalysis($node, false, $analyseFunctionParametersDocblock);
+            $this->returnAnalysis($node, false, $analyseFunctionReturnDocblock);
         }
 
         return $this->report;
@@ -65,109 +68,137 @@ class AnalyseFunction extends AbstractAnalyser
     /**
      * Validating which analysis can be done for the parameters.
      *
-     * @param string $code
-     * @param bool   $analyseFunction
-     * @param bool   $analyseDocblock
+     * @param \PhpParser\Node $node
+     * @param bool            $analyseFunction
+     * @param bool            $analyseDocblock
      *
-     * @return \Mediadevs\StrictlyPHP\Report|null
+     * @return void
      */
-    private function parameterAnalysis(string $code, bool $analyseFunction, bool $analyseDocblock): ?Report
+    private function parameterAnalysis(Node $node, bool $analyseFunction, bool $analyseDocblock): void
     {
+        // Storing whether the docblock and function parameter types were set, this is used for analysing whether
+        // the parameter types from the docblock and the function match.
+        $results = array();
+
+        // Subjects for analysis.
+        $functionParameters = $analyseFunction ? $this->getParameters($node) : array();
+        $docblock           = $analyseDocblock ? $this->getDocblockFromNode($node) : null;
+        $docblockParameters = $analyseDocblock ? $this->getParametersFromDocblock($docblock) : array();
+
         // Analysing the function and the docblock for parameters.
         if ($analyseFunction && $analyseDocblock) {
-            // TODO: WRITE LOGIC.
+            // Whether the function parameter type is set.
+            foreach ($functionParameters as $parameter) {
+                $functionParameterType = $this->getParameterType($parameter);
+
+                if (!isset($functionParameterType)) {
+                    $this->report->add(null, /* (UntypedParameter) */);
+                }
+
+                // Storing the parameter type for later analysis to determine whether the types match.
+                $results['function_parameters'] = [
+                    $parameter => $functionParameterType,
+                ];
+            }
+
+            // Whether the docblock parameter type is set.
+            foreach ($docblockParameters as $parameter) {
+                $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
+
+                if (!isset($docblockParameterType)) {
+                    $this->report->add(null, /* (UntypedDocblockParameter) */);
+                }
+
+                // Storing the parameter type for later analysis to determine whether the types match.
+                $results['docblock_parameters'] = [
+                    $parameter => $docblockParameterType,
+                ];
+            }
+
+            // Analysing whether the parameter types match up.
+            foreach ($results as $group => $parameters) {
+                $functionParameterExists = (bool) isset($results['function_parameters'][$parameters]) ? true : false;
+                $docblockParameterExists = (bool) isset($results['docblock_parameters'][$parameters]) ? true : false;
+
+                // Validating whether the parameter in both the docblock as the function exists.
+                if ($functionParameterExists && $docblockParameterExists) {
+                    if ($results['function_parameters'][$parameters] !== $results['docblock_parameters'][$parameters]) {
+                        $this->report->add(null, /* (MistypedParameter) */);
+                    }
+                } elseif ($functionParameterExists && !$docblockParameterExists) {
+                    $this->report->add(null, /* (UntypedDocblockParameter) */);
+                } elseif (!$functionParameterExists && $docblockParameterExists) {
+                    $this->report->add(null, /* (UntypedFunctionParameter) */);
+                }
+            }
         }
 
         // Analysing the function docblock for parameters.
         if (!$analyseFunction && $analyseDocblock) {
-            // TODO: WRITE LOGIC.
+            foreach ($results as $parameter) {
+                $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
+
+                if (!isset($docblockParameterType)) {
+                    $this->report->add(null, /* (UntypedDocblockParameter) */);
+                }
+            }
         }
 
         // Analysing the function for parameters.
         if ($analyseFunction && !$analyseDocblock) {
-            // TODO: WRITE LOGIC.
-        }
+            foreach ($functionParameters as $parameter) {
+                $parameterType = $this->getParameterType($parameter);
 
-        // All filters have been disabled or analysis have passed and null will be returned.
-        return null;
+                if (!isset($parameterType)) {
+                    $this->report->add(null, /* (UntypedParameter) */);
+                }
+            }
+        }
     }
 
     /**
      * Validating which analysis can be done for the parameters.
      *
-     * @param string $code
-     * @param bool   $analyseFunction
-     * @param bool   $analyseDocblock
+     * @param \PhpParser\Node $node
+     * @param bool            $analyseFunction
+     * @param bool            $analyseDocblock
      *
-     * @return \Mediadevs\StrictlyPHP\Report|null
+     * @return void
      */
-    private function returnAnalysis(string $code, bool $analyseFunction, bool $analyseDocblock): ?Report
+    private function returnAnalysis(Node $node, bool $analyseFunction, bool $analyseDocblock): void
     {
-        // Analysing the function and the docblock for parameters.
+        // Subjects for analysis.
+        $functionReturnType = $analyseFunction ? $this->getReturnType($node) : null;
+        $docblock           = $analyseDocblock ? $this->getDocblockFromNode($node) : null;
+        $docblockReturnType = $analyseDocblock ? $this->getReturnTypeFromDocblock($docblock) : null;
+
+        // Analysing the function and the docblock for the return.
         if ($analyseFunction && $analyseDocblock) {
-            // TODO: WRITE LOGIC.
+            if (isset($functionReturnType) && isset($docblockReturnType)) {
+                if ($functionReturnType !== $docblockReturnType) {
+                    $this->report->add(null, /* (MistypedReturn) */);
+                }
+            } elseif (!isset($functionReturnType) && isset($docblockReturnType)) {
+                $this->report->add(null, /* (UntypedReturn) */);
+            } elseif (isset($functionReturnType) && isset($docblockReturnType)) {
+                $this->report->add(null, /* (UntypedDocblockReturn) */);
+            } else {
+                $this->report->add(null, /* (UntypedReturn && UntypedDocblockReturn) */);
+            }
         }
 
-        // Analysing the function docblock for parameters.
+        // Analysing the function docblock for the return.
         if (!$analyseFunction && $analyseDocblock) {
-            // TODO: WRITE LOGIC.
+            if (isset($docblockReturnType)) {
+                $this->report->add(null, /* (UntypedDocblockReturn) */);
+            }
         }
 
-        // Analysing the function for parameters.
+        // Analysing the function for the return.
         if ($analyseFunction && !$analyseDocblock) {
-            // TODO: WRITE LOGIC.
+            if (isset($returnType)) {
+                $this->report->add(null, /* (UntypedReturn) */);
+            }
         }
-
-        // All filters have been disabled or analysis have passed and null will be returned.
-        return null;
-    }
-
-    /**
-     * Analysing the parameters of the "function like" node.
-     *
-     * @param \PhpParser\Node\FunctionLike $node
-     *
-     * @return \Mediadevs\StrictlyPHP\Report|null
-     */
-    private function analyseParameters(FunctionLike $node): ?Report
-    {
-        return null;
-    }
-
-    /**
-     * Analysing the parameters of the "function like" docblock.
-     *
-     * @param \PhpParser\Node\FunctionLike $node
-     *
-     * @return \Mediadevs\StrictlyPHP\Report|null
-     */
-    private function analyseParameterDocblock(FunctionLike $node): ?Report
-    {
-        return null;
-    }
-
-
-    /**
-     * Analysing the return of the "function like" node.
-     *
-     * @param \PhpParser\Node\FunctionLike $node
-     *
-     * @return \Mediadevs\StrictlyPHP\Report|null
-     */
-    private function analyseReturn(FunctionLike $node): ?Report
-    {
-        return null;
-    }
-
-    /**
-     * Analysing the return of the "function like" docblock.
-     *
-     * @param \PhpParser\Node\FunctionLike $node
-     *
-     * @return \Mediadevs\StrictlyPHP\Report|null
-     */
-    private function analyseReturnDocblock(FunctionLike $node): ?Report
-    {
-        return null;
     }
 }

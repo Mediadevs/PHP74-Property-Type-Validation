@@ -2,6 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
+use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Report;
 
 /**
@@ -29,10 +30,10 @@ abstract class AbstractAnalyser
     /**
      * The basic analyser, each analysis type has it's own analysers but they will all cohort to this one.
      *
-     * @param string $code
-     * @param array  $filters
+     * @param \PhpParser\Node $node
+     * @param array           $filters
      *
      * @return \Mediadevs\StrictlyPHP\Report|null
      */
-    abstract public function analyse(string $code, array $filters): ?Report;
+    abstract public function analyse(Node $node, array $filters): ?Report;
 }
