@@ -19,7 +19,7 @@ Trait ReportLocation
      *
      * @return string
      */
-    public function location(string $file, int $line, int $column): string
+    protected static function location(string $file, int $line, int $column): string
     {
         $str = 'in file "%s" at line "%s" column "%s".';
 
