@@ -9,23 +9,9 @@ namespace Mediadevs\StrictlyPHP\Reporter\Options;
  */
 class MistypedReturn extends AbstractIssue
 {
-    /**
-     * @param string      $line
-     * @param string      $name
-     * @param string|null $type
-     * @param string|null $parameter
-     *
-     * @return AbstractIssue
-     */
-    public static function register(
-        string $line,
-        string $name,
-        ?string $type = null,
-        ?string $parameter = null
-    ): AbstractIssue
-    {
-        // TODO: Implement register() method.
+    /** @var string The identifier which the issue is identified by. */
+    private const IDENTIFIER = 'mistyped-return';
 
-        return new self();
-    }
+    /** @var string The severity level this issue is grouped by. */
+    private const SEVERITY = 'error';
 }

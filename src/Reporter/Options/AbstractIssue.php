@@ -9,28 +9,28 @@ abstract class AbstractIssue implements IssueInterface
      *
      * @var string
      */
-    private string $line;
+    protected static string $line;
 
     /**
      * The name of the subject which is the origin of the issue.
      *
      * @var string
      */
-    private string $name;
+    protected static string $name;
 
     /**
      * The type which the the subject should have.
      *
      * @var string
      */
-    private ?string $type;
+    protected static ?string $type;
 
     /**
      * The parameter which is the origin of the issue.
      *
      * @var string
      */
-    private ?string $parameter;
+    protected static ?string $parameter;
 
     /**
      * @param string      $line
@@ -40,10 +40,24 @@ abstract class AbstractIssue implements IssueInterface
      *
      * @return AbstractIssue
      */
-    abstract public static function register(
+    public static function register(
         string $line,
         string $name,
         ?string $type = null,
         ?string $parameter = null
-    ): AbstractIssue;
+    ): AbstractIssue
+    {
+        self::$line = $line;
+        self::$name = $name;
+
+        if ($type !== null) {
+            self::$type = $type;
+        }
+
+        if ($parameter !== null) {
+            self::$parameter = $parameter;
+        }
+
+        return new static();
+    }
 }
