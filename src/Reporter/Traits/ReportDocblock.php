@@ -12,70 +12,106 @@ trait ReportDocblock
     /**
      * Generating a message when the docblock is missing.
      *
+     * @param string $name
+     *
      * @return string
      */
-    protected function missingDocblock(): string
+    protected function missingDocblock(string $name): string
     {
-        return '';
+        $str = 'Missing docblock for "%s".';
+
+        return (string) sprintf($str, [$name]);
     }
 
     /**
      * Generating a message when a property is untyped in the docblock.
      *
+     * @param string $name
+     * @param string $type
+     *
      * @return string
      */
-    protected function untypedProperty(): string
+    protected function untypedProperty(string $name, string $type): string
     {
-        return '';
+        $str = 'Missing property type in docblock of "%s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $type]);
     }
 
     /**
      * Generating a message when a property is mistyped in the docblock.
      *
+     * @param string $name
+     * @param string $type
+     *
      * @return string
      */
-    protected function mistypedProperty(): string
+    protected function mistypedProperty(string $name, string $type): string
     {
-        return '';
+        $str = 'Invalid property type in docblock of "%s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $type]);
     }
 
     /**
      * Generating a message when a parameter is untyped in the docblock.
      *
+     * @param string      $name
+     * @param string      $type
+     * @param string|null $parameter
+     *
      * @return string
      */
-    protected function untypedParameter(): string
+    protected function untypedParameter(string $name, string $type, ?string $parameter): string
     {
-        return '';
+        $str = 'Missing parameter type in docblock of "%s". "@param %s %s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $type, $parameter]);
     }
 
     /**
      * Generating a message when a parameter is mistyped in the docblock.
      *
+     * @param string      $name
+     * @param string      $type
+     * @param string|null $parameter
+     *
      * @return string
      */
-    protected function mistypedParameter(): string
+    protected function mistypedParameter(string $name, string $type, ?string $parameter): string
     {
-        return '';
+        $str = 'Invalid parameter type in docblock of "%s". "@param %s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $parameter, $type]);
     }
 
     /**
      * Generating a message when a return is untyped in the docblock.
      *
+     * @param string $name
+     * @param string $type
+     *
      * @return string
      */
-    protected function untypedReturn(): string
+    protected function untypedReturn(string $name, string $type): string
     {
-        return '';
+        $str = 'Missing return type in docblock of "%s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $type]);
     }
 
     /**
      * Generating a message when a return is mistyped in the docblock.
      *
+     * @param string $name
+     * @param string $type
+     *
      * @return string
      */
-    protected function mistypedReturn(): string
+    protected function mistypedReturn(string $name, string $type): string
     {
-        return '';
+        $str = 'Invalid return type in docblock of "%s" must be of type "%s"';
+
+        return (string) sprintf($str, [$name, $type]);
     }
 }
