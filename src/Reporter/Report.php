@@ -21,9 +21,9 @@ class Report implements \Countable, \Iterator
     /**
      * Adding a new issue to the issue collection.
      *
-     * @param AbstractReport $report
+     * @param string $report
      */
-    public function add(AbstractReport $report): void
+    public function add(string $report): void
     {
         $this->reports[] = $report;
     }
