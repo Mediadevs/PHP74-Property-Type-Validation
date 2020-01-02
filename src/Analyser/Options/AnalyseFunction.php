@@ -99,70 +99,91 @@ class AnalyseFunction extends AbstractAnalyser
         $results = array();
 
         // Subjects for analysis.
-        $functionParameters = $analyseFunction ? $this->getParameters($node) : array();
         $docblock           = $analyseDocblock ? $this->getDocblockFromNode($node) : null;
         $docblockParameters = $analyseDocblock ? $this->getParametersFromDocblock($docblock) : array();
+        $functionParameters = $analyseFunction ? $this->getParameters($node) : array();
+
+        $line = $node->getStartLine();
+        $name = $node->name->name;
+
+        // Whether the function parameter type is set.
+        foreach ($functionParameters as $parameter) {
+            $this->issue->logAnalysedNode();
+
+            // Storing the parameter type for later analysis to determine whether the types match.
+            $results['function_parameters'] = [
+                $parameter => $this->getParameterType($parameter),
+            ];
+        }
+
+        // Whether the docblock parameter type is set.
+        foreach ($docblockParameters as $parameter) {
+            $this->issue->logAnalysedDocblock();
+
+            // Storing the parameter type for later analysis to determine whether the types match.
+            $results['docblock_parameters'] = [
+                $parameter => $this->getParameterTypeFromDocblock($docblock, $parameter),
+            ];
+        }
 
         // Analysing the function and the docblock for parameters.
         if ($analyseFunction && $analyseDocblock) {
-            $this->issue->logAnalysedNode();
-            $this->issue->logAnalysedDocblock();
-
-            // Whether the function parameter type is set.
-            foreach ($functionParameters as $parameter) {
-                $functionParameterType = $this->getParameterType($parameter);
-
-                if (!isset($functionParameterType)) {
-                    $this->issue->addIssue(
-                        UntypedParameter::register(null, null, null, null)
-                    )->logAnalysedNodeIssue();
-                }
-
-                // Storing the parameter type for later analysis to determine whether the types match.
-                $results['function_parameters'] = [
-                    $parameter => $functionParameterType,
-                ];
-            }
-
-            // Whether the docblock parameter type is set.
-            foreach ($docblockParameters as $parameter) {
-                $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
-
-                if (!isset($docblockParameterType)) {
-                    $this->issue->addIssue(
-                        UntypedParameterDocblock::register(null, null, null, null)
-                    )->logAnalysedDocblockIssue();
-                }
-
-                // Storing the parameter type for later analysis to determine whether the types match.
-                $results['docblock_parameters'] = [
-                    $parameter => $docblockParameterType,
-                ];
-            }
-
             // Analysing whether the parameter types match up.
             foreach ($results as $group => $parameters) {
-                $functionParameterExists = (bool) isset($results['function_parameters'][$parameters]) ? true : false;
-                $docblockParameterExists = (bool) isset($results['docblock_parameters'][$parameters]) ? true : false;
+                $this->issue->logAnalysedNode();
+                $this->issue->logAnalysedDocblock();
 
-                // Validating whether the parameter in both the docblock as the function exists.
-                if ($functionParameterExists && $docblockParameterExists) {
-                    if ($results['function_parameters'][$parameters] !== $results['docblock_parameters'][$parameters]) {
+                // Iterating through all the parameter and the assigned parameter types.
+                foreach ($parameters as $parameter => $type) {
+                    $functionParameterExists = (bool) isset($results['function_parameters'][$parameter]);
+                    $docblockParameterExists = (bool) isset($results['docblock_parameters'][$parameter]);
+
+                    // Collecting the correct type from the other index.
+                    $correctFunctionalType = $results['docblock_parameters'][$parameters];
+                    $correctDocblockType = $results['function_parameters'][$parameters];
+
+                    // Validating whether the parameter in both the docblock as the function exists.
+                    if ($functionParameterExists && $docblockParameterExists) {
+                        if ($results['function_parameters'][$parameters] !== $results['docblock_parameters'][$parameters]) {
+                            $this->issue->addIssue(
+                                MistypedParameter::register(
+                                    $line,
+                                    $name,
+                                    $correctDocblockType,
+                                    $parameter
+                                )
+                            )->logAnalysedNodeIssue();
+
+                            $this->issue->addIssue(
+                                MistypedParameterDocblock::register(
+                                    $line,
+                                    $name,
+                                    $correctFunctionalType,
+                                    $parameter
+                                )
+                            )->logAnalysedDocblockIssue();
+                        }
+
+                    } elseif ($functionParameterExists && !$docblockParameterExists) {
                         $this->issue->addIssue(
-                            MistypedParameter::register(null, null, null, null)
-                        )->logAnalysedNodeIssue();
-                        $this->issue->addIssue(
-                            MistypedParameterDocblock::register(null, null, null, null)
+                            UntypedParameterDocblock::register(
+                                $line,
+                                $name,
+                                $correctFunctionalType,
+                                $parameter
+                            )
                         )->logAnalysedDocblockIssue();
+
+                    } elseif (!$functionParameterExists && $docblockParameterExists) {
+                        $this->issue->addIssue(
+                            UntypedParameter::register(
+                                $line,
+                                $name,
+                                $correctDocblockType,
+                                $parameter
+                            )
+                        )->logAnalysedNodeIssue();
                     }
-                } elseif ($functionParameterExists && !$docblockParameterExists) {
-                    $this->issue->addIssue(
-                        UntypedParameterDocblock::register(null, null, null, null)
-                    )->logAnalysedDocblockIssue();
-                } elseif (!$functionParameterExists && $docblockParameterExists) {
-                    $this->issue->addIssue(
-                        UntypedParameter::register(null, null, null, null)
-                    )->logAnalysedNodeIssue();
                 }
             }
         }
@@ -171,12 +192,12 @@ class AnalyseFunction extends AbstractAnalyser
         if (!$analyseFunction && $analyseDocblock) {
             $this->issue->logAnalysedDocblock();
 
-            foreach ($results as $parameter) {
-                $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
+            foreach ($results['docblock_parameters'] as $parameter => $type) {
+                $correctType = $results['function_parameters'][$parameter];
 
                 if (!isset($docblockParameterType)) {
                     $this->issue->addIssue(
-                        UntypedParameterDocblock::register(null, null, null, null)
+                        UntypedParameterDocblock::register($line, $name, $correctType, $parameter)
                     )->logAnalysedDocblockIssue();
                 }
             }
@@ -186,12 +207,12 @@ class AnalyseFunction extends AbstractAnalyser
         if ($analyseFunction && !$analyseDocblock) {
             $this->issue->logAnalysedNode();
 
-            foreach ($functionParameters as $parameter) {
-                $parameterType = $this->getParameterType($parameter);
+            foreach ($results['function_parameters'] as $parameter => $type) {
+                $correctType = $results['docblock_parameters'][$parameter];
 
                 if (!isset($parameterType)) {
                     $this->issue->addIssue(
-                        UntypedParameter::register(null, null, null, null)
+                        UntypedParameter::register($line, $name,$correctType, $parameter)
                     )->logAnalysedNodeIssue();
                 }
             }
@@ -214,6 +235,9 @@ class AnalyseFunction extends AbstractAnalyser
         $docblock           = $analyseDocblock ? $this->getDocblockFromNode($node) : null;
         $docblockReturnType = $analyseDocblock ? $this->getReturnTypeFromDocblock($docblock) : null;
 
+        $line = $node->getStartLine();
+        $name = $node->name->name;
+
         // Analysing the function and the docblock for the return.
         if ($analyseFunction && $analyseDocblock) {
             $this->issue->logAnalysedNode();
@@ -222,26 +246,31 @@ class AnalyseFunction extends AbstractAnalyser
             if (isset($functionReturnType) && isset($docblockReturnType)) {
                 if ($functionReturnType !== $docblockReturnType) {
                     $this->issue->addIssue(
-                        MistypedReturn::register(null, null, null, null)
+                        MistypedReturn::register($line, $name, $docblockReturnType)
                     )->logAnalysedNodeIssue();
+
                     $this->issue->addIssue(
-                        MistypedReturnDocblock::register(null, null, null, null)
+                        MistypedReturnDocblock::register($line, $name, $functionReturnType)
                     )->logAnalysedDocblockIssue();
                 }
+
             } elseif (!isset($functionReturnType) && isset($docblockReturnType)) {
                 $this->issue->addIssue(
-                    UntypedReturn::register(null, null, null, null)
+                    UntypedReturn::register($line, $name, $functionReturnType)
                 )->logAnalysedNodeIssue();
+
             } elseif (isset($functionReturnType) && isset($docblockReturnType)) {
                 $this->issue->addIssue(
-                    UntypedReturnDocblock::register(null, null, null, null)
+                    UntypedReturnDocblock::register($line, $name, $functionReturnType)
                 )->logAnalysedDocblockIssue();
+
             } else {
                 $this->issue->addIssue(
-                    UntypedReturn::register(null, null, null, null)
+                    UntypedReturn::register($line, $name, $docblockReturnType)
                 )->logAnalysedNodeIssue();
+
                 $this->issue->addIssue(
-                    UntypedReturnDocblock::register(null, null, null, null)
+                    UntypedReturnDocblock::register($line, $name, $functionReturnType)
                 )->logAnalysedDocblockIssue();
             }
         }
@@ -252,7 +281,7 @@ class AnalyseFunction extends AbstractAnalyser
 
             if (isset($docblockReturnType)) {
                 $this->issue->addIssue(
-                    UntypedReturnDocblock::register(null, null, null, null)
+                    UntypedReturnDocblock::register($line, $name, $docblockReturnType)
                 )->logAnalysedDocblockIssue();
             }
         }
@@ -263,7 +292,7 @@ class AnalyseFunction extends AbstractAnalyser
 
             if (isset($returnType)) {
                 $this->issue->addIssue(
-                    UntypedReturn::register(null, null, null, null)
+                    UntypedReturn::register($line, $name, $returnType)
                 )->logAnalysedNodeIssue();
             }
         }
