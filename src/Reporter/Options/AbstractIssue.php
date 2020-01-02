@@ -9,28 +9,35 @@ abstract class AbstractIssue implements IssueInterface
      *
      * @var string
      */
-    protected static string $line;
+    protected string $line;
 
     /**
      * The name of the subject which is the origin of the issue.
      *
      * @var string
      */
-    protected static string $name;
+    protected string $name;
 
     /**
      * The type which the the subject should have.
      *
      * @var string
      */
-    protected static ?string $type;
+    protected ?string $type;
 
     /**
      * The parameter which is the origin of the issue.
      *
      * @var string
      */
-    protected static ?string $parameter;
+    protected ?string $parameter;
+
+    /**
+     * Instance of itself, used for error reporting.
+     *
+     * @var AbstractIssue
+     */
+    protected static self $instance;
 
     /**
      * @param string      $line
@@ -47,17 +54,36 @@ abstract class AbstractIssue implements IssueInterface
         ?string $parameter = null
     ): AbstractIssue
     {
-        self::$line = $line;
-        self::$name = $name;
+        self::$instance = static();
+        self::$instance->line = $line;
+        self::$instance->name = $name;
 
         if ($type !== null) {
-            self::$type = $type;
+            self::$instance->type = $type;
         }
 
         if ($parameter !== null) {
-            self::$parameter = $parameter;
+            self::$instance->parameter = $parameter;
         }
 
-        return new static();
+        return self::$instance;
+    }
+
+    /**
+     * Generating a detailed report with data regarding the issue.
+     *
+     * @return array
+     */
+    public static function getDetails(): array
+    {
+        return [
+            'identifier'    => self::IDENTIFIER,
+            'severity'      => self::SEVERITY,
+            'docblock_tag'  => self::DOCBLOCK_TAG,
+            'line'          => self::$instance->line,
+            'name'          => self::$instance->name,
+            'type'          => self::$instance->type,
+            'parameter'     => self::$instance->parameter,
+        ];
     }
 }
