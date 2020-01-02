@@ -30,6 +30,34 @@ class FileAnalysisResults
     private float $rating;
 
     /**
+     * The amount analysed nodes in this file.
+     *
+     * @var int
+     */
+    private int $nodeCounter = 0;
+
+    /**
+     * The amount analysed nodes which contained an issue in this file.
+     *
+     * @var int
+     */
+    private int $nodeIssueCounter = 0;
+
+    /**
+     * The amount analysed docblocks in this file.
+     *
+     * @var int
+     */
+    private int $docblockCounter = 0;
+
+    /**
+     * The amount analysed docblocks which contained an issue in this file.
+     *
+     * @var int
+     */
+    private int $docblockIssueCounter = 0;
+
+    /**
      * All the issues will be stored inside the $issues array. Each issue has several attributes.
      * The attributes for each issue are; "Severity", "Line" and "Message"
      *
@@ -49,10 +77,54 @@ class FileAnalysisResults
 
     /**
      * @param IssueInterface $issue
+     *
+     * @return self
      */
-    public function addIssue(IssueInterface $issue): void
+    public function addIssue(IssueInterface $issue): self
     {
         $this->issues[] = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Logging that a node has been analysed.
+     *
+     * @return void
+     */
+    public function logAnalysedNode(): void
+    {
+        $this->nodeCounter++;
+    }
+
+    /**
+     * Logging that an issue has been encountered whilst analysing a docblock.
+     *
+     * @return void
+     */
+    public function logAnalysedNodeIssue(): void
+    {
+        $this->nodeIssueCounter++;
+    }
+
+    /**
+     * Logging that a docblock has been analysed.
+     *
+     * @return void
+     */
+    public function logAnalysedDocblock(): void
+    {
+        $this->docblockCounter++;
+    }
+
+    /**
+     * Logging that an issue has been encountered whilst analysing a docblock.
+     *
+     * @return void
+     */
+    public function logAnalysedDocblockIssue(): void
+    {
+        $this->docblockIssueCounter++;
     }
 
     /**
@@ -94,23 +166,16 @@ class FileAnalysisResults
      * The impact of the functional code is measured with an heavier rating compared to the docblock rating since
      * the docblock has no real-life impact to the code.
      *
-     * @param int $code
-     * @param int $docblock
-     * @param int $codeIssues
-     * @param int $docblockIssues
-     *
      * @return void
      */
-    public static function calculate(
-        int $code,
-        int $docblock,
-        int $codeIssues,
-        int $docblockIssues
-    ): void
+    private function calculate(): void
     {
+        $docblockRating = ($this->docblockIssueCounter / $this->docblockIssueCounter);
+        $nodeRating     = ($this->nodeIssueCounter / $this->nodeCounter);
+
         $rating = array(
-            'code'      => (float) (($codeIssues / $code) * self::WEIGHT_ISSUE_CODE),
-            'docblock'  => (float) (($docblockIssues / $docblock) * self::WEIGHT_ISSUE_DOCBLOCK),
+            'code'      => (float) ($nodeRating * self::WEIGHT_ISSUE_CODE),
+            'docblock'  => (float) ($docblockRating * self::WEIGHT_ISSUE_DOCBLOCK),
         );
 
         /**
