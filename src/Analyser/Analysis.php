@@ -39,7 +39,7 @@ class Analysis
         'analyse-method-parameters-docblock'        => AnalyseFunction::class,
         'analyse-method-return-docblock'            => AnalyseFunction::class,
         'analyse-method-docblock'                   => AnalyseFunction::class,
-        // Property Analysers
+        // MistypedProperty Analysers
         'analyse-property'                          => AnalyseProperty::class,
         'analyse-property-docblock'                 => AnalyseProperty::class,
         'analyse-property-assignable'               => AnalyseProperty::class,

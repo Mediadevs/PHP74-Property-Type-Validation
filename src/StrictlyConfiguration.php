@@ -38,7 +38,7 @@ class StrictlyConfiguration
         'analyse-method-parameters-docblock',
         'analyse-method-return-docblock',
         'analyse-method-callable',
-        // Property Analysers
+        // MistypedProperty Analysers
         'analyse-property',
         'analyse-property-docblock',
         'analyse-property-assignable',
