@@ -18,12 +18,17 @@ class UntypedPropertyDocblock extends AbstractIssue
      * @param string|null $type
      * @param string|null $parameter
      *
-     * @return string
+     * @return AbstractIssue
      */
-    public function register(string $line, string $name, ?string $type = null, ?string $parameter = null): string
+    public static function register(
+        string $line,
+        string $name,
+        ?string $type = null,
+        ?string $parameter = null
+    ): AbstractIssue
     {
         // TODO: Implement register() method.
 
-        return '';
+        return new self();
     }
 }

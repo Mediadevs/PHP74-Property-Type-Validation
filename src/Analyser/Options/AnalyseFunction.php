@@ -2,15 +2,19 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
-use Mediadevs\StrictlyPHP\Reporter\Options\ReportMistypedDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameter;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameterDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturn;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturnDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedParameterDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturn;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturnDocblock;
 use PhpParser\Node;
-use Mediadevs\StrictlyPHP\Report;
+use Mediadevs\StrictlyPHP\Reporter\FileAnalysisResults;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
-use Mediadevs\StrictlyPHP\Reporter\Options\ReportUntyped;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseDocblock;
-use Mediadevs\StrictlyPHP\Reporter\Options\ReportMistyped;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseParameters;
-use Mediadevs\StrictlyPHP\Reporter\Options\ReportUntypedDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedParameter;
 
 /**
  * Class AnalyseFunction.
@@ -24,14 +28,24 @@ class AnalyseFunction extends AbstractAnalyser
     use AnalyseParameters;
 
     /**
+     * AnalyseFunction constructor.
+     *
+     * @param string $file
+     */
+    public function __construct(string $file)
+    {
+        parent::__construct($file);
+    }
+
+    /**
      * The basic analyser, each analysis type has it's own analysers but they will all cohort to this one.
      *
      * @param \PhpParser\Node $node
      * @param array           $filters
      *
-     * @return \Mediadevs\StrictlyPHP\Report|null
+     * @return FileAnalysisResults|null
      */
-    public function analyse(Node $node, array $filters): ?Report
+    public function analyse(Node $node, array $filters): ?FileAnalysisResults
     {
         // The analysis filters.
         $analyseFunction                    = (bool) isset($filters['analyse-function']);
@@ -66,7 +80,7 @@ class AnalyseFunction extends AbstractAnalyser
             $this->returnAnalysis($node, false, $analyseFunctionReturnDocblock);
         }
 
-        return $this->report;
+        return $this->issues;
     }
 
     /**
@@ -96,7 +110,9 @@ class AnalyseFunction extends AbstractAnalyser
                 $functionParameterType = $this->getParameterType($parameter);
 
                 if (!isset($functionParameterType)) {
-                    $this->report->add(ReportUntyped::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameter::register(null, null, null, null)
+                    );
                 }
 
                 // Storing the parameter type for later analysis to determine whether the types match.
@@ -110,7 +126,9 @@ class AnalyseFunction extends AbstractAnalyser
                 $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
 
                 if (!isset($docblockParameterType)) {
-                    $this->report->add(ReportUntypedDocblock::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameterDocblock::register(null, null, null, null)
+                    );
                 }
 
                 // Storing the parameter type for later analysis to determine whether the types match.
@@ -127,21 +145,21 @@ class AnalyseFunction extends AbstractAnalyser
                 // Validating whether the parameter in both the docblock as the function exists.
                 if ($functionParameterExists && $docblockParameterExists) {
                     if ($results['function_parameters'][$parameters] !== $results['docblock_parameters'][$parameters]) {
-                        $this->report->add(ReportMistyped::mistypedParameter(
-                            null,
-                            null,
-                            null
-                        ));
-                        $this->report->add(ReportMistypedDocblock::mistypedParameter(
-                            null,
-                            null,
-                            null
-                        ));
+                        $this->issue->addIssue(
+                            MistypedParameter::register(null, null, null, null)
+                        );
+                        $this->issue->addIssue(
+                            MistypedParameterDocblock::register(null, null, null, null)
+                        );
                     }
                 } elseif ($functionParameterExists && !$docblockParameterExists) {
-                    $this->report->add(ReportUntypedDocblock::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameterDocblock::register(null, null, null, null)
+                    );
                 } elseif (!$functionParameterExists && $docblockParameterExists) {
-                    $this->report->add(ReportUntyped::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameter::register(null, null, null, null)
+                    );
                 }
             }
         }
@@ -152,7 +170,9 @@ class AnalyseFunction extends AbstractAnalyser
                 $docblockParameterType = $this->getParameterTypeFromDocblock($docblock, $parameter);
 
                 if (!isset($docblockParameterType)) {
-                    $this->report->add(ReportUntypedDocblock::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameterDocblock::register(null, null, null, null)
+                    );
                 }
             }
         }
@@ -163,7 +183,9 @@ class AnalyseFunction extends AbstractAnalyser
                 $parameterType = $this->getParameterType($parameter);
 
                 if (!isset($parameterType)) {
-                    $this->report->add(ReportUntyped::untypedParameter(null, null, null));
+                    $this->issue->addIssue(
+                        UntypedParameter::register(null, null, null, null)
+                    );
                 }
             }
         }
@@ -189,30 +211,46 @@ class AnalyseFunction extends AbstractAnalyser
         if ($analyseFunction && $analyseDocblock) {
             if (isset($functionReturnType) && isset($docblockReturnType)) {
                 if ($functionReturnType !== $docblockReturnType) {
-                    $this->report->add(ReportMistyped::mistypedReturn(null, null));
-                    $this->report->add(ReportMistypedDocblock::mistypedReturn(null, null));
+                    $this->issue->addIssue(
+                        MistypedReturn::register(null, null, null, null)
+                    );
+                    $this->issue->addIssue(
+                        MistypedReturnDocblock::register(null, null, null, null)
+                    );
                 }
             } elseif (!isset($functionReturnType) && isset($docblockReturnType)) {
-                $this->report->add(ReportUntyped::untypedReturn(null, null));
+                $this->issue->addIssue(
+                    UntypedReturn::register(null, null, null, null)
+                );
             } elseif (isset($functionReturnType) && isset($docblockReturnType)) {
-                $this->report->add(ReportUntypedDocblock::untypedReturn(null, null));
+                $this->issue->addIssue(
+                    UntypedReturnDocblock::register(null, null, null, null)
+                );
             } else {
-                $this->report->add(ReportUntyped::untypedReturn(null, null));
-                $this->report->add(ReportUntypedDocblock::untypedReturn(null, null));
+                $this->issue->addIssue(
+                    UntypedReturn::register(null, null, null, null)
+                );
+                $this->issue->addIssue(
+                    UntypedReturnDocblock::register(null, null, null, null)
+                );
             }
         }
 
         // Analysing the function docblock for the return.
         if (!$analyseFunction && $analyseDocblock) {
             if (isset($docblockReturnType)) {
-                $this->report->add(ReportUntypedDocblock::untypedReturn(null, null));
+                $this->issue->addIssue(
+                    UntypedReturnDocblock::register(null, null, null, null)
+                );
             }
         }
 
         // Analysing the function for the return.
         if ($analyseFunction && !$analyseDocblock) {
             if (isset($returnType)) {
-                $this->report->add(ReportUntyped::untypedReturn(null, null));
+                $this->issue->addIssue(
+                    UntypedReturn::register(null, null, null, null)
+                );
             }
         }
     }

@@ -76,7 +76,7 @@ class Analysis
      */
     public function __construct()
     {
-        $this->report = new Report();
+        $this->issues = new Report();
     }
 
     /**
@@ -104,7 +104,7 @@ class Analysis
             }
         }
 
-        return $this->report;
+        return $this->issues;
     }
 
     /**

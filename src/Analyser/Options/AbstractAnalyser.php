@@ -4,6 +4,7 @@ namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
 use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Report;
+use Mediadevs\StrictlyPHP\Reporter\FileAnalysisResults;
 
 /**
  * Class AbstractAnalyser.
@@ -15,16 +16,18 @@ abstract class AbstractAnalyser
     /**
      * All the issues will be registered in this report instance.
      *
-     * @var \Mediadevs\StrictlyPHP\Report
+     * @var FileAnalysisResults
      */
-    protected Report $report;
+    protected FileAnalysisResults $issue;
 
     /**
      * AbstractAnalyser constructor.
+     *
+     * @param string $file
      */
-    public function __construct()
+    public function __construct(string $file)
     {
-        $this->report = new Report();
+        $this->issue = new FileAnalysisResults($file);
     }
 
     /**
@@ -33,7 +36,7 @@ abstract class AbstractAnalyser
      * @param \PhpParser\Node $node
      * @param array           $filters
      *
-     * @return \Mediadevs\StrictlyPHP\Report|null
+     * @return FileAnalysisResults
      */
-    abstract public function analyse(Node $node, array $filters): ?Report;
+    abstract public function analyse(Node $node, array $filters): ?FileAnalysisResults;
 }
