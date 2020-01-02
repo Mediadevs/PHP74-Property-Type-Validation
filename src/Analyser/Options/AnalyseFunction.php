@@ -2,6 +2,8 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
+use Mediadevs\StrictlyPHP\Reporter\Options\Parameter\MistypedParameter;
+use Mediadevs\StrictlyPHP\Reporter\Options\ReportUntyped;
 use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Report;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
@@ -92,7 +94,13 @@ class AnalyseFunction extends AbstractAnalyser
                 $functionParameterType = $this->getParameterType($parameter);
 
                 if (!isset($functionParameterType)) {
-                    $this->report->add(null, /* (UntypedParameter) */);
+                    $issue = (new MistypedParameter())
+                        ->setName($node->name->name)
+                        ->setLine($node->name->getStartLine())
+                        ->setParameter($parameter->var->name)
+                        ->setType($functionParameterType);
+
+                    $this->report->add($issue->getMessage());
                 }
 
                 // Storing the parameter type for later analysis to determine whether the types match.

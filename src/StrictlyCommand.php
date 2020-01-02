@@ -50,7 +50,6 @@ class StrictlyCommand extends Command
         // The exit code this command will return based on the events which occurred.
         $exitCode = '';
 
-
         // Stopping the stopwatch and storing the results in $duration.
         $stopwatchEvent = $stopwatch->stop($this->getName());
 

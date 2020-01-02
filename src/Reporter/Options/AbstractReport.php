@@ -31,13 +31,6 @@ abstract class AbstractReport
     protected int $column;
 
     /**
-     * The subject which can property or function or any specific node.
-     *
-     * @var string
-     */
-    protected string $subject;
-
-    /**
      * The name of the subject, this can be a property or a method.
      *
      * @var string
@@ -51,6 +44,7 @@ abstract class AbstractReport
      */
     protected string $parameter;
 
+
     /**
      * The type that the subject should have.
      *
@@ -62,9 +56,9 @@ abstract class AbstractReport
      * Creating a report based upon the issue, each report has a can import a specific set of traits
      * to match it's own properties.
      *
-     * @return string
+     * @return self
      */
-    public static abstract function create(): string;
+    public abstract function getMessage(): self;
 
     /**
      * @param string $file
@@ -98,18 +92,6 @@ abstract class AbstractReport
     public function setColumn(int $column): self
     {
         $this->column = $column;
-
-        return $this;
-    }
-
-    /**
-     * @param string $subject
-     *
-     * @return \Mediadevs\StrictlyPHP\Reporter\AbstractReport
-     */
-    public function setSubject(string $subject): self
-    {
-        $this->subject = $subject;
 
         return $this;
     }

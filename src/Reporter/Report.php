@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP;
 
-use Mediadevs\StrictlyPHP\Reporter\IssueInterface;
+use Mediadevs\StrictlyPHP\Reporter\AbstractReport;
 
 /**
  * Class Report.
@@ -12,20 +12,20 @@ use Mediadevs\StrictlyPHP\Reporter\IssueInterface;
 class Report implements \Countable, \Iterator
 {
     /**
-     * Storage for all the issues, each issue must implement the IssueInterface.
+     * Storage for all the reports, each report must extend the AbstractReport.
      *
      * @var array
      */
-    private array $issues = array();
+    private array $reports = array();
 
     /**
      * Adding a new issue to the issue collection.
      *
-     * @param IssueInterface $issue
+     * @param AbstractReport $report
      */
-    public function add(IssueInterface $issue): void
+    public function add(AbstractReport $report): void
     {
-        $this->issues[] = $issue;
+        $this->reports[] = $report;
     }
 
     /**
@@ -33,7 +33,7 @@ class Report implements \Countable, \Iterator
      */
     public function current()
     {
-        return current($this->issues);
+        return current($this->reports);
     }
 
     /**
@@ -41,7 +41,7 @@ class Report implements \Countable, \Iterator
      */
     public function next()
     {
-        return next($this->issues);
+        return next($this->reports);
     }
 
     /**
@@ -49,7 +49,7 @@ class Report implements \Countable, \Iterator
      */
     public function key()
     {
-        return key($this->issues);
+        return key($this->reports);
     }
 
     /**
@@ -65,7 +65,7 @@ class Report implements \Countable, \Iterator
      */
     public function rewind()
     {
-        return reset($this->issues);
+        return reset($this->reports);
     }
 
     /**
@@ -73,6 +73,6 @@ class Report implements \Countable, \Iterator
      */
     public function count(): int
     {
-        return count($this->issues);
+        return count($this->reports);
     }
 }
