@@ -2,6 +2,11 @@
 
 namespace Mediadevs\StrictlyPHP\Reporter\Options;
 
+/**
+ * Class AbstractIssue.
+ *
+ * @package Mediadevs\StrictlyPHP\Reporter\Options
+ */
 abstract class AbstractIssue implements IssueInterface
 {
     /**

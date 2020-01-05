@@ -2,19 +2,19 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
-use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameter;
-use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameterDocblock;
-use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturn;
-use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturnDocblock;
-use Mediadevs\StrictlyPHP\Reporter\Options\UntypedParameterDocblock;
-use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturn;
-use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturnDocblock;
 use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Reporter\FileAnalysisResults;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseReturn;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturn;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturn;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseDocblock;
 use Mediadevs\StrictlyPHP\Analyser\Traits\AnalyseParameters;
 use Mediadevs\StrictlyPHP\Reporter\Options\UntypedParameter;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameter;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedReturnDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedReturnDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\UntypedParameterDocblock;
+use Mediadevs\StrictlyPHP\Reporter\Options\MistypedParameterDocblock;
 
 /**
  * Class AnalyseFunction.

@@ -3,7 +3,6 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Options;
 
 use PhpParser\Node;
-use Mediadevs\StrictlyPHP\Report;
 use Mediadevs\StrictlyPHP\Reporter\FileAnalysisResults;
 
 /**
